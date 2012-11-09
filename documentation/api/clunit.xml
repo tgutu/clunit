@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.1.0">
+	<description>
+		<p>
+			<b>CLUnit</b> is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
+			
+		</p>
+		<p>
+			CLUnit provides a rich set of features aimed at improving your unit testing experience:
+			<ul>
+				<li>Multiple inheritance model for test suites which allows you to group your tests into hierarchies.</li>
+				<li>Composes the test results of a test suite hierarchy into a single report.</li>
+				<li>Supports composable test suite fixtures.</li>
+				<li>Allows for an interactive testing process which gives you access to the test environment.</li>
+				<li>Provides visual feeback of the unit test progress.</li>
+				<li>Choice of test report format. Currently only default reporting and TAP version 13 output is supported.</li>
+				<li>Allows redefinition of inline functions and macros without having to redefine your tests.</li>
+			</ul>
+		</p>
+		<p>
+			Head over <a href='https://github.com/tgutu/clunit'>here</a> to get the code and see some examples. Coming soon to Quicklisp.
+		</p>
+	</description>
+
+	<symbols>
+		<symbol name="*clunit-report-format*" type="Special">
+			<return-type>(or :default :tap nil)</return-type>
+			<description>
+				<p>Controls the output format of the unit test results. Possible values are :default, :tap or NIL.</p>
+			</description>
+		</symbol>
+
+		<symbol name="clunit-report" type="CLASS">
+			<description>
+				<p>CLUNIT-REPORT is the class of the report object returned by the functions <a href="#run-suite">RUN-SUITE</a> and <a href="#run-test">RUN-TEST</a>.</p>
+			</description>
+		</symbol>
+
+		<symbol name="assert-true" type="Macro">
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if it returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-false" type="Macro">
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if it returns false. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-eq" type="Macro">
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQ VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-eql" type="Macro">
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-equal" type="Macro">
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUAL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-equalp" type="Macro">
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUALP VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-expands" type="Macro">
+			<argument  value-type="t" arg-type="required" name="expansion"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUALP EXPANSION (MACROEXPAND-1 EXPRESSION)) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-condition" type="Macro">
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if EXPRESSION signals CONDITION. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="deffixture" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="suite"/>
+			<argument  value-type="SYMBOL" arg-type="required" name="(plug)"/>
+			<argument  value-type="LIST" arg-type="body" name="body"/>
+			<description>
+				<p>
+					A fixture defines a code template that is wrapped around the code of each test case and test suite that inherits from SUITE. The test case body is plugged into the template at the position identified by PLUG.
+					Fixtures are expanded at runtime, so the fixture that will wrap around a test depends on the test suite call stack.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="deftest" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<argument  value-type="LIST" arg-type="body" name="body"/>
+			<description>
+				<p>
+					Defines a test case called TEST-NAME. If PARENT-SUITES is non-NIL, a reference to the test is added to each test suite, otherwise its a suiteless test.
+					The test case body is revaluated on each run, so any redefinition of macros and inline functions will be automatically visible without having to redefine the test.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="defsuite" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<argument  value-type="List" arg-type="required" name="parents"/>
+			<description>
+				<p>
+					Defines a test suite called NAME. If PARENTS is non-NIL, the test suite is defined as a sub-suite of each of the test suites in PARENTS.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="undeftest" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<description>
+				<p>
+					Undefines a previously defined test case.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="undefsuite" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<description>
+				<p>
+					Undefines a previously defined test suite.
+				</p>
+			</description>
+		</symbol>
+			
+		<symbol name="run-test" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<argument  value-type="(or t nil)" arg-type="key" name='(report-progress t)'/>
+			<argument  value-type="(or t nil)" arg-type="key" name="use-debugger"/>
+			<description>
+				<p>
+					Executes a test case called TEST. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="run-suite" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<argument  value-type="(or t nil)" arg-type="key" name='(report-progress t)'/>
+			<argument  value-type="(or t nil)" arg-type="key" name="use-debugger"/>
+			<description>
+				<p>
+					Executes a test suite called SUITE. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true.
+				</p>
+			</description>
+		</symbol>
+	</symbols>
+</asdf>
