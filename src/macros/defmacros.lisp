@@ -15,15 +15,47 @@
 		(remove-if #'superclass-p class-list)))
 
 
+#|
+	The method EXPAND-FIXTURE now specializes on the test suite name instead of the class.
+	Consider the hierarchy shown below
+
+	(defsuite NumberSuite ())
+
+	(defsuite FloatSuite (NumberSuite))
+
+	(defsuite IntegerSuite (NumberSuite))
+
+	(defsuite BooleanSuite (FloatSuite IntegerSuite))
+
+	(deffixture IntegerSuite (@body)
+		(let ((x 0) (y 1) (z 2))
+			@body))
+
+	(deffixture FloatSuite (@body)
+	    (let ((x 0.0) (y 1.0) (z 2.0))
+			@body))
+
+
+	(deftest test-bool1 (BooleanSuite)
+		(assert-true  (< x y z))
+		(assert-true  (= x y z) x y z))
+
+	Because BooleanSuite does not have a fixture but is a subclass of both FloatSuite and IntegerSuite
+	When TESTBOOL1 is called inside the IntegerSuite the call
+	(expand-fixture (make-instance 'BooleanSuite) body) actually end up calling the fixture expander
+	for the FloatSuite because FloatSuite is more specific than Integer suite!
+	So we will stick to only using the suite name and that will solve the problem.
+|#
 (defmacro deffixture (suite (plug) &body body)
-	"A fixture defines a code template that is wrapped around the code of each test case and test suite that inherits from SUITE. The test case body is plugged into the template at the position identified by PLUG.
+	"A fixture defines a code template that is wrapped around the code of each test case and test suite that are executed by test suite SUITE at runtime.. The test case body is plugged into the template at the position identified by PLUG.
 Fixtures are expanded at runtime, so the fixture that will wrap around a test depends on the test suite call stack."
 	`(handler-bind ((warning #'muffle-warning))
 		;; Test that fixture is being defined for a SUITE subclass.
 		(unless (typep (make-instance ',suite) 'suite)
 				(error "~A is not a test suite." ',suite))
-		(defmethod expand-fixture ((suite ,suite) body)
+		(defmethod expand-fixture ((suite (eql ',suite)) body)
 			(subst body ',plug '(progn ,@body)))))
+
 
 (defmacro defsuite (name parents)
 	"Defines a test suite called NAME. If PARENTS is non-NIL the test suite is defined as a sub-suite of each of the test suites in PARENTS."
@@ -69,7 +101,7 @@ The test case body is revaluated on each run, so any redefinition of macros and 
 						(report-test-progress ',test-name *suite-name*)
 						(when *suite-name*																	; If test was not called by any test suite, then do not attempt to expand out any fixtures.
 							(dolist (suite (reverse *suite-name*) body)										; However, if the test is being executed in a context with one or more test suites,
-								(setf body (expand-fixture (make-instance suite) body))))					; expand out the fixtures starting with the most specific
+								(setf body (expand-fixture suite body))))									; expand out the fixtures starting with the most specific
 						(eval body)))))
 			',test-name))
 

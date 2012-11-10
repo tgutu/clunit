@@ -1,0 +1,8 @@
+;;; CLUnit: A Common Lisp Unit Testing Framework.
+;;; Author(s):		Tapiwa HM. Gutu
+;;; Maintainer(s):	Tapiwa HM. Gutu
+;;;
+;;;	Update history:
+;;;
+;;; DD/MM/YY
+;;; 10/11/12 Redefined methods of the generic function EXPAND-FIXTURE to specialize on the test suite name instead of class to solve some fringe cases with unintended effects. [THMG]

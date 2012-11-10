@@ -9,17 +9,14 @@
 		<p>
 			CLUnit provides a rich set of features aimed at improving your unit testing experience:
 			<ul>
-				<li>Multiple inheritance model for test suites which allows you to group your tests into hierarchies.</li>
-				<li>Composes the test results of a test suite hierarchy into a single report.</li>
+				<li>Multiple inheritance for test suites allows you to group tests into hierarchies.</li>
+				<li>Composes the test results of each test run into a single report.</li>
+				<li>Allows redefinition of inline functions and macros without having to redefine your tests.</li>
 				<li>Supports composable test suite fixtures.</li>
 				<li>Allows for an interactive testing process which gives you access to the test environment.</li>
 				<li>Provides visual feeback of the unit test progress.</li>
-				<li>Choice of test report format. Currently only default reporting and TAP version 13 output is supported.</li>
-				<li>Allows redefinition of inline functions and macros without having to redefine your tests.</li>
+				<li>Extensible test reporting. Builtin support for default reporting and TAP output.</li>
 			</ul>
-		</p>
-		<p>
-			Head over <a href='https://github.com/tgutu/clunit'>here</a> to get the code and see some examples. Coming soon to Quicklisp.
 		</p>
 	</description>
 

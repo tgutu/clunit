@@ -7,13 +7,13 @@
                 <title>
                     <xsl:value-of select="@name" /> API
                 </title>
-                <link href="style.css" rel="stylesheet" type="text/css" />
+                <link href="css/style.css" rel="stylesheet" type="text/css" />
             </head>
 
             <body>                
                 <div id="asdf-page-title">
                     <h1>API Documentation: <xsl:value-of select="@name"/></h1>
-					<img src="lisplogo.png" style="left:2%;top:1.5%;position:absolute" width="90" length="90"/>
+					<img src="images/lisplogo.png" style="left:2%;top:1.5%;position:absolute" width="90" length="90"/>
                 </div>
 				
 				<h3 style="color:green;">Author(s)</h3>
