@@ -1,0 +1,47 @@
+CLUnit TODO
+===========
+	"There are two ways of constructing a software design.
+	 One way is to make it so simple that there are obviously
+	 no deficiencies. And the other way is to make it so
+	 complicated that there are no obvious deficiencies."
+	  — C.A.R. Hoare.
+	
+	"Programming is like sex: one mistake and you're providing
+	 support for a lifetime."
+	  — Michael Sinz.
+	  
+
+1. Performance
+	The library seems to suffer from a serious performance hit.
+	Try	the following piece of code to amuse yourself.
+	
+		(deftest test-true ()
+			(assert-true t))
+
+		(time
+			(loop
+				:for i :from 1 :upto 10000
+				:do (run-test 'test-true :report-progress nil)))
+		
+	There are two possible culprits that I suspect:
+	1.	Inorder to allow you redefine your macros and functions without
+		having to redefine the tests, the library delays evaluation
+		of the test forms to runtime. This evalution occurs everytime
+		you run a test.
+		
+		I think this is an extremely valuable feature so sacrificing it
+		in exchange for a little more speed does not really seem like a
+		sensible thing to do.
+		
+	2.	The next and most probable culprit is the use of generic functions
+		throughout the code base. Specializing methods on the names of test
+		cases and test suites makes the development effort so much easier.
+		Whether this is the actual culprit is yet to be determinded.
+	
+	Only with feedback from the community can we make a decision whether
+	this is such a serious shortcoming that needs to be addressed.
+	The unit test framework provides so much more to make up for its
+	performance, so maybe its something we might be willing to live with,
+	atleast for now.
+	
+	
