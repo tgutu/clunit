@@ -48,32 +48,31 @@
 </ul><h3>Table of Contents</h3>
 
 <ol>
-<li><a href='#cluni_1'>Documentation</a></li>
-<li><a href='#cluni_2'>Tutorial</a>
+<li>Documentation</li>
+<li>Tutorial
 
 <ol>
-<li><a href='#cluni_3'>Creating the test hierarchy</a></li>
-<li><a href='#cluni_4'>Defining a test</a></li>
-<li><a href='#cluni_5'>Running our first test</a></li>
-<li><a href='#cluni_6'>Changing the report format</a></li>
-<li><a href='#cluni_7'>Controlling diagnostic output</a></li>
-<li><a href='#cluni_8'>Interactive tests</a></li>
-<li><a href='#cluni_8'>Defining and using fixtures</a></li>
+<li>Creating the test hierarchy</li>
+<li>Defining a test</li>
+<li>Running our first test</li>
+<li>Changing the report format</li>
+<li>Controlling diagnostic output</li>
+<li>Interactive tests</li>
+<li>Defining and using fixtures</li>
+<li>Short circuiting a unit test</li>
 </ol>
 </li>
-</ol><h4 id='cluni_1'>Documentation</h4>
+</ol><h4>Documentation</h4>
 
 <p>The API documentation can be found <a href="api/clunit.xml" title="CLUnit Documentation">here</a>. If you are interested in the story behind CLUnit you can find it <a href="http://ml.sun.ac.za/2012/11/09/developing-a-unit-test-framework-part-1/" title="Developing a unit test framework">here</a>.</p>
 
-<h4 id='cluni_2'>Tutorial</h4>
+<h4>Tutorial</h4>
 
 <p>For this tutorial we will write a unit test for our hypothetical number crunching library. Our unit test contains four test suites and five test cases. The image below gives a visual representation of our test hierarchy.</p>
 
-<p><img src="api/images/example-test-suite.png" style="width: 290px; height: 480px; position: static; display: block; margin-left: auto; margin-right: auto; text-align: center;" alt="Test suite heirarchy"/></p>
+<p><img src="api/images/example-test-suite.png" alt="Test suite heirarchy"><br></p>
 
-<br/>
-
-<h5 id='cluni_3'>Creating the test hierarchy</h5>
+<h5>Creating the test hierarchy</h5>
 
 <p>To create the test suite hierarchy shown in the image we use the following code.</p>
 
@@ -90,9 +89,9 @@
 <span class="p">(</span><span class="nv">defsuite</span> <span class="nv">BooleanSuite</span> <span class="p">(</span><span class="nv">FloatSuite</span> <span class="nv">IntegerSuite</span><span class="p">))</span>
 </pre></div>
 
-<br/>
+<p><br></p>
 
-<h5 id='cluni_4'>Defining a test</h5>
+<h5>Defining a test</h5>
 
 <p>Next we define two test cases for our <code>FloatSuite</code> and <code>IntegerSuite</code> test suites. Each test contains two assertion forms.</p>
 
@@ -109,9 +108,9 @@
     <span class="p">(</span><span class="nv">assert-equal</span> <span class="mf">4.0</span> <span class="p">(</span><span class="nb">+</span> <span class="mf">2.0</span> <span class="mf">2.0</span><span class="p">)))</span>
 </pre></div>
 
-<br/>
+<p><br></p>
 
-<h5 id='cluni_5'>Running our first test</h5>
+<h5>Running our first test</h5>
 
 <p>To run an individual test you use the form <code>(RUN-TEST 'test-name)</code>, however we are interested in running the entire test suite so we shall use the form  <code>(RUN-SUITE 'test-name)</code>.</p>
 
@@ -178,9 +177,9 @@
         <span class="nv">Errors:</span> <span class="m">0/4</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
 </pre></div>
 
-<br/>
+<p><br></p>
 
-<h5 id='cluni_6'>Changing the report format</h5>
+<h5>Changing the report format</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> return a <code>CLUNIT-REPORT</code> object, the default <code>PRINT-OBJECT</code> method prints the aggregated details of the unit test failures and a test summary. </p>
 
@@ -206,9 +205,9 @@
 <span class="nv">ok</span> <span class="mi">4</span>
 </pre></div>
 
-<br>
+<p><br></p>
 
-<h5 id='cluni_7'>Controlling diagnostic output</h5>
+<h5>Controlling diagnostic output</h5>
 
 <p>Apart from the mandatory arguments, the assertion forms accept additional arguments that will be printed if an error occurs. An assertion macro call then takes the the following form:</p>
 
@@ -242,7 +241,7 @@
 
 <p><br></p>
 
-<h5 id='cluni_8'>Interactive tests</h5>
+<h5>Interactive tests</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:use-debugger</code>. If this argument is set to true, the unit test will fall into the debugger if an assesrtion fails.</p>
 
@@ -263,12 +262,13 @@
   <span class="nv">4:</span> <span class="nv">[SKIP-TEST</span>                 <span class="nv">]</span> <span class="nv">Skip</span> <span class="nv">test</span> <span class="nv">TEST-INT1.</span>
   <span class="nv">5:</span> <span class="nv">[SKIP-SUITE</span>                <span class="nv">]</span> <span class="nv">Skip</span> <span class="nv">test</span> <span class="nv">suite</span> <span class="nv">INTEGERSUITE.</span>
   <span class="nv">6:</span>                              <span class="nv">Skip</span> <span class="nv">test</span> <span class="nv">suite</span> <span class="nv">NUMBERSUITE.</span>
-  <span class="nv">7:</span> <span class="nv">[ABORT</span>                     <span class="nv">]</span> <span class="nv">Exit</span> <span class="nv">debugger,</span> <span class="nv">returning</span> <span class="nv">to</span> <span class="nv">top</span> <span class="nv">level.</span>
+  <span class="nv">7:</span> <span class="nv">[CANCEL-UNIT-TEST</span>          <span class="nv">]</span> <span class="nv">Cancel</span> <span class="nv">unit</span> <span class="nv">test</span> <span class="nv">execution.</span>
+  <span class="nv">8:</span> <span class="nv">[ABORT</span>                     <span class="nv">]</span> <span class="nv">Exit</span> <span class="nv">debugger,</span> <span class="nv">returning</span> <span class="nv">to</span> <span class="nv">top</span> <span class="nv">level.</span>
 </pre></div>
 
 <p><br></p>
 
-<h5 id='cluni_9'>Defining and using fixtures</h5>
+<h5>Defining and using fixtures</h5>
 
 <p>Fixtures are used in unit tests to setup a consistent context/enviroment in which tests can be executed so that results are reproducible. CLUnit allows you to define fixtures for each test suite.</p>
 
@@ -333,6 +333,56 @@
         <span class="nv">Failed:</span> <span class="m">2/6</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
         <span class="nv">Errors:</span> <span class="m">2/6</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
 </pre></div>
+
+<p><br></p>
+
+<h5>Short circuiting a unit test</h5>
+
+<p>Consider a situation were we are writing a unit test for another hypothetical application. Our application consists of multiple levels of abstraction. Each layer relies on the functionality provided by the layer below. If the unit test of a layer fails, there is no point in running the tests of the layers above.</p>
+
+<p>CLUnit provides an easy way of short circuiting a unit test. The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:stop-on-fail</code>. If this argument is set to true, the rest of the unit test is cancelled when any assertion fails or an error occurs.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">run-suite</span> <span class="ss">'NumberSuite</span> <span class="ss">:stop-on-fail</span> <span class="no">t</span><span class="p">)</span>
+<span class="nv">PROGRESS:</span>
+<span class="nv">=========</span>
+
+    <span class="nv">NUMBERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+
+        <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+            <span class="nv">TEST-INT1:</span> <span class="nv">F</span>
+<span class="nv">DETAILS:</span>
+<span class="nv">=========</span>
+
+    <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+        <span class="nv">TEST-INT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span>
+                   <span class="nv">Expected:</span> <span class="no">T</span>
+                   <span class="nv">Returned:</span> <span class="no">NIL</span>
+<span class="nv">SUMMARY:</span>
+<span class="nv">========</span>
+    <span class="nv">Tested</span> <span class="mi">1</span> <span class="nv">assertion.</span>
+        <span class="nv">Passed:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
+        <span class="nv">Failed:</span> <span class="m">1/1</span> <span class="p">(</span><span class="nv">100.0%</span><span class="p">)</span>
+        <span class="nv">Errors:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
+</pre></div>
+
+<p>Since the execution of tests in a test suite is unordered, what we need is a way of specifying that one test depends on another test passing. CLUnit does not have an explicit way of stating test dependency. Fortunately, we can make use of the test suite hierarchy to achieve same effect. Since test cases in each test suite are executed before the child test suites, we can create a test suite for each layer in the application. The test suite of each layer will inherit from the test suite of the layer below.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">defsuite</span> <span class="nv">LowLevelSuite</span> <span class="p">())</span>
+
+<span class="p">(</span><span class="nv">defsuite</span> <span class="nv">MidLevelSuite</span> <span class="p">(</span><span class="nv">LowLevelSuite</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">defsuite</span> <span class="nv">HighLevelSuite</span> <span class="p">(</span><span class="nv">MidLevelSuite</span><span class="p">))</span>
+
+<span class="c1">;; Define tests for low level functionality</span>
+<span class="c1">;; Define tests for middle level functionality</span>
+<span class="c1">;; Define tests for high level functionality</span>
+
+<span class="p">(</span><span class="nv">run-suite</span> <span class="ss">'LowLevelSuite</span> <span class="ss">:stop-on-fail</span> <span class="no">t</span><span class="p">)</span>
+</pre></div>
+
+<p>In the example above, all the <code>LowLevelSuite</code> test cases will be executed, followed by the <code>MidLevelSuite</code> test cases and finishing with the <code>HighLevelSuite</code> test cases. If any test in <code>LowLevelSuite</code> fails the tests in <code>MidLevelSuite</code> and  <code>HighLevelSuite</code> will not be executed.</p>
+
+<h5>Thats all there is to it, so happy hacking!!!</h5>
       </section>
     </div>
 
