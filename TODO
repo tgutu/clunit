@@ -11,9 +11,9 @@ CLUnit TODO
 	  — Michael Sinz.
 	  
 
-1. Performance
+1.	Performance
 	The library seems to suffer from a serious performance hit.
-	Try	the following piece of code to amuse yourself.
+	Try the following piece of code to amuse yourself.
 	
 		(deftest test-true ()
 			(assert-true t))
@@ -43,5 +43,28 @@ CLUnit TODO
 	The unit test framework provides so much more to make up for its
 	performance, so maybe its something we might be willing to live with,
 	atleast for now.
+
+
+2.	Library Unit Tests
+	Unit tests for the library need to written, so how do you write unit
+	tests for a unit test framework in the language of the framework you
+	might ask? Ever heard of something called bootstrapping? If you haven't
+	I think you should go dust off those OS text books asap!
+	
+	The idea is quite simple, an ideal library has a core with multiple
+	layers wrapped around that core. So macros like DEFTEST would occur
+	on the outermost layer.
+	
+	The tests of the innermost core can be written as straight forward
+	checks that don't use the syntax of the library. However, there will
+	be a layer were if everything had been okay up to that point, it becomes
+	safe to use the framework syntax itself to write the remaining checks.
+	
+	So the challenge is to figure out what that safe point is. What needs
+	to be done first, is to make a graphical representation of the function
+	and macro calls in the library. The calls should be separated into their
+	respective layers. That stratification also has other uses in design
+	and maintenance but I have ranted long enough so I will stop here.
+
 	
 	
