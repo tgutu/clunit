@@ -42,7 +42,8 @@
 
 
 (defmacro assert-true (expression &body forms)
-	"Evaluates EXPRESSION as an assertion, an assertion passes if it returns true. FORMS and their values are printed if the test fails."
+	"Evaluates EXPRESSION as an assertion, an assertion passes if it returns any non-NIL value. FORMS and their values are printed if the test fails.
+Remember in Common Lisp any non-NIL value is true, if you want a strict binary assertion test use (assert-eq t expression) instead."
 	(with-gensyms (result)
 		(assertion-expander :result result :test result :result-expression expression :report-expression expression :expected t :forms forms)))
 

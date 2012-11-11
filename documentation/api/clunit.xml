@@ -39,7 +39,8 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					Evaluates EXPRESSION as an assertion, an assertion passes if it returns true. FORMS and their values are printed if the test fails.
+					Evaluates EXPRESSION as an assertion, an assertion passes if it returns any non-NIL value. FORMS and their values are printed if the test fails.
+					Remember in Common Lisp any non-NIL value is true, if you want a strict binary assertion test use <b>(assert-eq t expression)</b> instead.
 				</p>
 			</description>
 		</symbol>
@@ -49,7 +50,7 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					Evaluates EXPRESSION as an assertion, an assertion passes if it returns false. FORMS and their values are printed if the test fails.
+					Evaluates EXPRESSION as an assertion, an assertion passes if it returns NIL. FORMS and their values are printed if the test fails.
 				</p>
 			</description>
 		</symbol>
@@ -174,9 +175,11 @@
 			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
 			<argument  value-type="(or t nil)" arg-type="key" name='(report-progress t)'/>
 			<argument  value-type="(or t nil)" arg-type="key" name="use-debugger"/>
+			<argument  value-type="(or t nil)" arg-type="key" name="stop-on-fail"/>
 			<description>
 				<p>
 					Executes a test case called TEST. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true.
+					If STOP-ON-FAIL is set to true, the rest of the unit test is cancelled when any assertion fails or an error occurs.
 				</p>
 			</description>
 		</symbol>
@@ -185,9 +188,11 @@
 			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
 			<argument  value-type="(or t nil)" arg-type="key" name='(report-progress t)'/>
 			<argument  value-type="(or t nil)" arg-type="key" name="use-debugger"/>
+			<argument  value-type="(or t nil)" arg-type="key" name="stop-on-fail"/>
 			<description>
 				<p>
 					Executes a test suite called SUITE. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true.
+					If STOP-ON-FAIL is set to true, the rest of the unit test is cancelled when any assertion fails or an error occurs
 				</p>
 			</description>
 		</symbol>
