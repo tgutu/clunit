@@ -37,23 +37,38 @@
 					(:pass	(incf passes)
 							(invoke-restart restart))))	; We do not invoke the debugger for successful assertions.
 
+			(if *stop-on-fail*
+				(invoke-restart 'cancel-unit-test))
+
 			(if (and restart (not *use-debugger*))
 				(invoke-restart restart)))))
 
 
-(defun run-test (test &key use-debugger (report-progress t))
+(defun run-test (test &key use-debugger (report-progress t) stop-on-fail)
 	"Executes a test case called TEST. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true."
-	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress))
+	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress)(*stop-on-fail* stop-on-fail))
 		(handler-bind ((error #'handle-condition)(warning #'muffle-warning))
-			(if *report-progress* (format *standard-output* "~%PROGRESS:~%========="))
-			(execute-test test))
+			(restart-case
+				(progn
+					(if *report-progress*
+						(format *standard-output* "~%PROGRESS:~%========="))
+					(execute-test test))
+				(cancel-unit-test () 
+					:report (lambda (s) (format s "Cancel unit test execution."))
+					nil)))
 		*clunit-report*))
 
-(defun run-suite (suite &key use-debugger (report-progress t))
+(defun run-suite (suite &key use-debugger (report-progress t) stop-on-fail)
 	"Executes a test suite called SUITE. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true."
-	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress))
+	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress) (*stop-on-fail* stop-on-fail))
 		(handler-bind ((error #'handle-condition)(warning #'muffle-warning))
-			(if *report-progress* (format *standard-output* "~%PROGRESS:~%========="))
-			(execute-suite suite))
+			(restart-case
+				(progn
+					(if *report-progress*
+						(format *standard-output* "~%PROGRESS:~%========="))
+					(execute-suite suite))
+				(cancel-unit-test () 
+					:report (lambda (s) (format s "Cancel unit test execution."))
+					nil)))
 		*clunit-report*))
 
