@@ -95,7 +95,7 @@
 
 <p>Next we define two test cases for our <code>FloatSuite</code> and <code>IntegerSuite</code> test suites. Each test contains two assertion forms.</p>
 
-<p><code>ASSERT-TRUE</code> considers the assertion a pass if the expression supplied to it returns true and <code>(ASSERT-EQUAL value expression)</code> considers the assertion to have passed if <code>(EQUAL value expression)</code> returns true.</p>
+<p><code>ASSERT-TRUE</code> considers the assertion a pass if the expression supplied to it returns a non-NIL value and <code>(ASSERT-EQUAL value expression)</code> considers the assertion to have passed if <code>(EQUAL value expression)</code> returns true.</p>
 
 <div class="highlight"><pre><span class="c1">;; Define a test called TEST-INT1</span>
 <span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-int1</span> <span class="p">(</span><span class="nv">IntegerSuite</span><span class="p">)</span>
