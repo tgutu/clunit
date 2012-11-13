@@ -67,4 +67,32 @@ CLUnit TODO
 	and maintenance but I have ranted long enough so I will stop here.
 
 	
+3.	ASSERT-EQUALITY? (See lisp-unit)
+	Assertion form that takes a test function as an argument. Basically its
+	an (assert-**** value expression) form were you provide	the **** function.
+
 	
+4.	Rerunning Failed Tests
+	Excerpt from Chris Riesbeck's email:
+	"The other thing I like about TestNG is that one option for running
+	 is 'just run the tests that failed the last time.' This is good for
+	 making the turnaround to fix some bugs fast. Then when the failed
+	 tests are fixed, you do the normal run to make sure all tests pass.
+	 No extra work for the user, just a convenient extra function for
+	 quick checking if you solved the problem."
+	 
+
+5.	Explicit test dependencies
+	Excerpt from Chris Riesbeck's email:
+	"I prefer the approach used in TestNG. You can optionally explicitly
+	 annotate that one test should only be run if some other test passes,
+	 e.g., 'if the database connection test fails, don't bother with me at all.'" 
+	
+	I had countered this argument by pointing out that you can group
+	your tests into a hierarchy and use the :STOP-ON-FAIL option. But he
+	countered my counter argument with this:
+	"If I understand the design here, it's hierarchical i.e., tree structured,
+	 whereas "this test depends on that test" is an acyclic graph. I'm not sure
+	 dependencies would fit a hierarchy well. There are typically some basic
+	 tests that many other tests depend on, like database or network access."
+	That is to say, a clean hierarchy isn't always possible.
