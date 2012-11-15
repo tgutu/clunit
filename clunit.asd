@@ -20,6 +20,7 @@
 								 (:file "run-functions")))
 
 						(:module "macros"
+							:serial t
 							:components
 								((:file "utility-macros")
 								 (:file "assertion-macros")
