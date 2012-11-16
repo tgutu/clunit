@@ -27,4 +27,5 @@
 							:components
 								((:file "utility-macros")
 								 (:file "assertion-macros")
-								 (:file "defmacros")))))))
+								 (:file "defmacros")
+								 (:file "defsuite")))))))
