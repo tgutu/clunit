@@ -11,13 +11,16 @@
 						 					
 						(:module "classes" 
 							:components
-								((:file "classes")))
+								((:file "classes")
+								 (:file "clunit-test-case")
+								 (:file "clunit-test-suite")))
 						 								 
 						 (:module "functions" 
 							:components
 								((:file "generic-functions")
 								 (:file "report-functions")
-								 (:file "run-functions")))
+								 (:file "run-functions")
+								 (:file "utility-functions")))
 
 						(:module "macros"
 							:serial t
