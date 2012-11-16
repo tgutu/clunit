@@ -22,11 +22,11 @@
 
 (defun report-suite-progress (suite suite-list)
 	(if *report-progress*
-		(format *standard-output* "~%~%~VT~A: (Test Suite)" (* *tab-width* (1+ (length suite-list))) suite)))
+		(format *standard-output* "~%~%~VT~S: (Test Suite)" (* *tab-width* (1+ (length suite-list))) suite)))
 
 (defun report-test-progress (test-name suite-list)
 	(if *report-progress*
-		(format *standard-output* "~%~VT~A: " (* *tab-width* (1+ (length suite-list))) test-name)))
+		(format *standard-output* "~%~VT~S: " (* *tab-width* (1+ (length suite-list))) test-name)))
 
 (defun report-assertion-progress (type)
 	(if *report-progress*
@@ -37,12 +37,12 @@
 
 ;; The special treatment I have to give to the non-standard formatting behaviour in clisp is really beginning to piss me off.
 (defmethod print-object ((assertion-condition assertion-condition) stream)
-	(if (member *clunit-report-format* '(:default :tap :tap13 :tap12))
+	(if (member *clunit-report-format* '(:default :tap))
 		(print-format assertion-condition *clunit-report-format* stream)
 		(call-next-method)))
 
 (defmethod print-object ((clunit-report clunit-report) stream)
-	(if (member *clunit-report-format* '(:default :tap :tap13 :tap12))
+	(if (member *clunit-report-format* '(:default :tap))
 		(print-format clunit-report *clunit-report-format* stream)
 		(call-next-method)))
 
@@ -57,8 +57,8 @@
 				(dolist (condition assertion-conditions)
 					(unless (equal suite (slot-value condition 'suite))
 						(setf suite (slot-value condition 'suite))
-						#-clisp (format stream "~4I~:@_~:@_~8I~A~{~^ -> ~A~}: (Test Suite)" (first suite) (rest suite))
-						#+clisp (format stream "~-4I~:@_~:@_~A~{~^ -> ~A~}: (Test Suite)~4I" (first suite) (rest suite)))
+						#-clisp (format stream "~4I~:@_~:@_~8I~S~{~^ -> ~S~}: (Test Suite)" (first suite) (rest suite))
+						#+clisp (format stream "~-4I~:@_~:@_~S~{~^ -> ~S~}: (Test Suite)~4I" (first suite) (rest suite)))
 					(unless (eq :pass (slot-value condition 'type))
 						(format stream "~:@_~A" condition))))
 		
@@ -75,9 +75,9 @@
 	(pprint-logical-block (stream nil)
 		(with-slots (expression expected message result forms test type) assertion-condition
 			(case type
-				(:error	(format stream "~A: ~<~A~:>" test message))
-				(t		#-clisp (format stream "~A: ~<Expression: ~S~:@_Expected: ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}~:>" test (list expression expected result forms))
-						#+clisp (format stream "~A: ~8IExpression ~S~:@_Expected ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}" test expression expected result forms))))))
+				(:error	(format stream "~S: ~<~A~:>" test message))
+				(t		#-clisp (format stream "~S: ~<Expression: ~S~:@_Expected: ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}~:>" test (list expression expected result forms))
+						#+clisp (format stream "~S: ~8IExpression ~S~:@_Expected ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}" test expression expected result forms))))))
 
 
 ;; TEST ANYTHING PROTOCOL (TAP)
@@ -97,8 +97,7 @@
 (defmethod print-format ((assertion-condition assertion-condition) (format (eql :tap)) stream)
 	(pprint-logical-block (stream nil :per-line-prefix "#  ")
 		(with-slots (expression expected message result forms test suite type) assertion-condition
-			#-clisp (format stream "Suite: ~A~{~^ -> ~A~}" (first suite) (rest suite))
-			#+clisp (format stream "Suite: ~A~{~^ -> ~A~}" (first suite) (rest suite))
+			#-clisp (format stream "Suite: ~S~{~^ -> ~S~}" (first suite) (rest suite))
 			(case type
-				(:error	(format stream "~:@_Test: ~A:~:@_~A" test message))
-				(t		(format stream "~:@_Test: ~A~:@_Expression: ~S~:@_Expected: ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}" test expression expected result forms))))))
+				(:error	(format stream "~:@_Test: ~S:~:@_~A" test message))
+				(t		(format stream "~:@_Test: ~S~:@_Expression: ~S~:@_Expected: ~A~:@_Returned: ~A~{~^~:@_~:[~A~;~S => ~S~]~}" test expression expected result forms))))))
