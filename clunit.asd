@@ -21,8 +21,8 @@
 							:components
 								((:file "generic-functions")
 								 (:file "execute-test-case")
+								 (:file "execute-test-suite")
 								 (:file "report-functions")
-								 (:file "run-functions")
 								 (:file "utility-functions")))
 
 						(:module "macros"

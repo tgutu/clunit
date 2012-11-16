@@ -12,7 +12,6 @@
 (defun execute-test-case (test-case)
 	(with-slots (test-function dependencies name) test-case
 		(let ((*clunit-test-report* (make-instance 'clunit-test-report :test-name name :suite-list *suite-name*)))
-
 			(push *clunit-test-report* (slot-value *clunit-report* 'test-reports))	
 			;; Check for dependencies
 			(funcall test-function)

@@ -1,12 +1,6 @@
 (in-package :clunit)
 
 
-;; These are the two main generic functions used to execute a test case or test suite,
-;; they are indirectly called by the functions RUN-SUITE and RUN-TEST.
-(defgeneric execute-test-suite (suite)
-	(:documentation "Executes the tests defined in a test suite and then executes the child test suites."))
-
-
 ;; This function is called inside the EXECUTE-TEST method at runtime.
 (defgeneric expand-fixture (suite body)
 	(:documentation "Expands out a fixture body for the given test suite."))
