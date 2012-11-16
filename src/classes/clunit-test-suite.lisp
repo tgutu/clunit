@@ -3,8 +3,7 @@
 (defclass CLUNIT-TEST-SUITE ()
 	((name			:initarg :name			:initform nil)
 	 (test-cases	:initarg :test-cases	:initform (list))
-	 (child-suites	:initarg :child-suites	:initform (list))
-	 (parent-suites	:initarg :parent-suites	:initform (list))))
+	 (child-suites	:initarg :child-suites	:initform (list))))
 
 ;;	The slots TEST-CASES, CHILD-SUITES and PARENT-SUITES hold the symbol names
 ;;	of test cases and test suites instead of the actual objects. Using an indirect

@@ -28,4 +28,5 @@
 								((:file "utility-macros")
 								 (:file "assertion-macros")
 								 (:file "defmacros")
-								 (:file "defsuite")))))))
+								 (:file "defsuite")
+								 (:file "deftest")))))))
