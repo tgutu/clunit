@@ -36,7 +36,7 @@
 Fixtures are expanded at runtime, so the fixture that will wrap around a test depends on the test suite call stack."
 	`(handler-bind ((warning #'muffle-warning))
 		;; Test that fixture is being defined for a SUITE subclass.
-		(unless (typep (make-instance ',suite) 'suite)
+		(unless (get-test-suite ',suite)
 				(error "~A is not a test suite." ',suite))
 		(defmethod expand-fixture ((suite (eql ',suite)) body)
 			(subst body ',plug '(progn ,@body)))))

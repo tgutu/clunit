@@ -12,10 +12,10 @@
 						(:module "classes" 
 							:components
 								((:file "classes")
+								 (:file "clunit-report")
 								 (:file "clunit-test-case")
 								 (:file "clunit-test-suite")
-								 (:file "clunit-test-report")
-								 (:file "clunit-report")))
+								 (:file "clunit-test-report")))
 						 								 
 						 (:module "functions" 
 							:components
@@ -29,6 +29,6 @@
 							:components
 								((:file "utility-macros")
 								 (:file "assertion-macros")
-								 (:file "defmacros")
+								 (:file "deffixture")
 								 (:file "defsuite")
 								 (:file "deftest")))))))
