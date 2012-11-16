@@ -76,10 +76,6 @@ The test case body is revaluated on each run, so any redefinition of macros and 
 			(setf (get-test-case ',name) (make-instance 'clunit-test-case :name ',name :dependencies ,test-dependencies :test-function ,test-function)))))
 
 
-
-;; (handler-bind ((warning #'muffle-warning)) <== This should be placed in RUN-TEST and RUN-SUITE
-
-
 ;; UNDEFTEST Algorithm:
 ;; 1. Check if test case is defined, if its not throw an error.
 ;; 2. Undefine test

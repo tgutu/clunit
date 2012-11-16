@@ -13,7 +13,9 @@
 							:components
 								((:file "classes")
 								 (:file "clunit-test-case")
-								 (:file "clunit-test-suite")))
+								 (:file "clunit-test-suite")
+								 (:file "clunit-test-report")
+								 (:file "clunit-report")))
 						 								 
 						 (:module "functions" 
 							:components

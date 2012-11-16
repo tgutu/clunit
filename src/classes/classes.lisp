@@ -1,7 +1,5 @@
 (in-package :clunit)
 
-(defclass suite () ())
-
 (defclass clunit-report ()
 	((errors :initform 0)
 	 (passes :initform 0)
