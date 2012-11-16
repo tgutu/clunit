@@ -44,20 +44,6 @@
 				(invoke-restart restart)))))
 
 
-(defun run-test (test &key use-debugger (report-progress t) stop-on-fail)
-	"Executes a test case called TEST. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true."
-	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress)(*stop-on-fail* stop-on-fail))
-		(handler-bind ((error #'handle-condition)(warning #'muffle-warning))
-			(restart-case
-				(progn
-					(if *report-progress*
-						(format *standard-output* "~%PROGRESS:~%========="))
-					(execute-test test))
-				(cancel-unit-test () 
-					:report (lambda (s) (format s "Cancel unit test execution."))
-					nil)))
-		*clunit-report*))
-
 (defun run-suite (suite &key use-debugger (report-progress t) stop-on-fail)
 	"Executes a test suite called SUITE. REPORT-PROGRESS switches on progress reporting if set to true. The debugger is invoked whenever an assertion fails if USE-DEBUGGER is set to true."
 	(let ((*clunit-report* (make-instance 'clunit-report)) (*use-debugger* use-debugger) (*report-progress* report-progress) (*stop-on-fail* stop-on-fail))

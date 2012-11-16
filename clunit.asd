@@ -20,6 +20,7 @@
 						 (:module "functions" 
 							:components
 								((:file "generic-functions")
+								 (:file "execute-test-case")
 								 (:file "report-functions")
 								 (:file "run-functions")
 								 (:file "utility-functions")))
