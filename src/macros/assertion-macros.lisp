@@ -7,7 +7,7 @@
 			(if ,test
 				(signal-assertion :pass)
 				(signal-assertion :fail
-					:result ,result
+					:returned ,result
 					:expected ',expected
 					:expression ',report-expression
 					:forms (list ,@(form-expander forms)))))))
@@ -93,11 +93,11 @@ Remember in Common Lisp any non-NIL value is true, if you want a strict binary a
 		(handler-case 
 			(progn
 				,expression
-				(signal-assertion :fail :expression ',expression :result nil :expected ',condition :forms (list ,@(form-expander forms))))
+				(signal-assertion :fail :expression ',expression :expected ',condition :forms (list ,@(form-expander forms))))
 			
 			(,condition ()
 					(signal-assertion :pass))
 			(condition (c)
-					(signal-assertion :fail :expression ',expression :result (type-of c) :expected ',condition :forms (list ,@(form-expander forms)))))))
+					(signal-assertion :fail :expression ',expression :returned (type-of c) :expected ',condition :forms (list ,@(form-expander forms)))))))
 
 

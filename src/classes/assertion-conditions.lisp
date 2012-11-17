@@ -7,7 +7,7 @@
 
 
 (define-condition ASSERTION-ERROR (ASSERTION-CONDITION)
-	((message :initarg :message :initform nil :documentation "This is a special case, if an unexpected condition is signalled outside an assertion test, store the condition description here.")))
+	((message :initarg :message :initform "" :documentation "This is a special case, if an unexpected condition is signalled outside an assertion test, store the condition description here.")))
 
 
 (define-condition ASSERTION-FAILED (ASSERTION-CONDITION)

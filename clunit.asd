@@ -19,11 +19,17 @@
 						 								 
 						 (:module "functions" 
 							:components
-								((:file "generic-functions")
-								 (:file "execute-test-case")
-								 (:file "execute-test-suite")
-								 (:file "report-functions")
-								 (:file "utility-functions")))
+								((:file "assertion-functions")
+								 (:file "generic-functions")
+								 (:file "test-case-functions")
+								 (:file "test-suite-functions")
+								 (:file "progress-report-functions")))
+
+						(:module "report-formats" 
+							:components
+								((:file "report-format-default")
+								 (:file "report-format-tap")
+								 (:file "print-object")))
 
 						(:module "macros"
 							:serial t
