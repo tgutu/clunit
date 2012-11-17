@@ -20,7 +20,7 @@ CLUnit TODO
 
 		(time
 			(loop
-				:for i :from 1 :upto 10000
+				:for i :from 1 :upto 1000
 				:do (run-test 'test-true :report-progress nil)))
 		
 	There are two possible culprits that I suspect:
@@ -33,11 +33,6 @@ CLUnit TODO
 		in exchange for a little more speed does not really seem like a
 		sensible thing to do.
 		
-	2.	The next and most probable culprit is the use of generic functions
-		throughout the code base. Specializing methods on the names of test
-		cases and test suites makes the development effort so much easier.
-		Whether this is the actual culprit is yet to be determinded.
-	
 	Only with feedback from the community can we make a decision whether
 	this is such a serious shortcoming that needs to be addressed.
 	The unit test framework provides so much more to make up for its
@@ -45,54 +40,6 @@ CLUnit TODO
 	atleast for now.
 
 
-2.	Library Unit Tests
-	Unit tests for the library need to written, so how do you write unit
-	tests for a unit test framework in the language of the framework you
-	might ask? Ever heard of something called bootstrapping? If you haven't
-	I think you should go dust off those OS text books asap!
-	
-	The idea is quite simple, an ideal library has a core with multiple
-	layers wrapped around that core. So macros like DEFTEST would occur
-	on the outermost layer.
-	
-	The tests of the innermost core can be written as straight forward
-	checks that don't use the syntax of the library. However, there will
-	be a layer were if everything had been okay up to that point, it becomes
-	safe to use the framework syntax itself to write the remaining checks.
-	
-	So the challenge is to figure out what that safe point is. What needs
-	to be done first, is to make a graphical representation of the function
-	and macro calls in the library. The calls should be separated into their
-	respective layers. That stratification also has other uses in design
-	and maintenance but I have ranted long enough so I will stop here.
-
-	
-3.	ASSERT-EQUALITY? (See lisp-unit)
+2.	ASSERT-EQUALITY? (See lisp-unit)
 	Assertion form that takes a test function as an argument. Basically its
 	an (assert-**** value expression) form were you provide	the **** function.
-
-	
-4.	Rerunning Failed Tests
-	Excerpt from Chris Riesbeck's email:
-	"The other thing I like about TestNG is that one option for running
-	 is 'just run the tests that failed the last time.' This is good for
-	 making the turnaround to fix some bugs fast. Then when the failed
-	 tests are fixed, you do the normal run to make sure all tests pass.
-	 No extra work for the user, just a convenient extra function for
-	 quick checking if you solved the problem."
-	 
-
-5.	Explicit test dependencies
-	Excerpt from Chris Riesbeck's email:
-	"I prefer the approach used in TestNG. You can optionally explicitly
-	 annotate that one test should only be run if some other test passes,
-	 e.g., 'if the database connection test fails, don't bother with me at all.'" 
-	
-	I had countered this argument by pointing out that you can group
-	your tests into a hierarchy and use the :STOP-ON-FAIL option. But he
-	countered my counter argument with this:
-	"If I understand the design here, it's hierarchical i.e., tree structured,
-	 whereas "this test depends on that test" is an acyclic graph. I'm not sure
-	 dependencies would fit a hierarchy well. There are typically some basic
-	 tests that many other tests depend on, like database or network access."
-	That is to say, a clean hierarchy isn't always possible.

@@ -23,6 +23,7 @@
 								 (:file "generic-functions")
 								 (:file "test-case-functions")
 								 (:file "test-suite-functions")
+								 (:file "rerun-failed-tests")
 								 (:file "progress-report-functions")))
 
 						(:module "report-formats" 
