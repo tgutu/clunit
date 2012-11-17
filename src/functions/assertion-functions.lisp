@@ -21,19 +21,21 @@
 	"Records the result of assertion tests and records any errors that occur."
 	(let ((restart (or (find-restart 'skip-assertion) (find-restart 'skip-test))))
 		(with-slots (passed failed errors) *clunit-report*
-			(with-slots (assertion-conditions) *clunit-test-report*
+			(with-slots (passed-p assertion-conditions) *clunit-test-report*
 				(setf assertion-conditions (nconc assertion-conditions (list condition)))
 				(typecase	condition	
-					(assertion-error	
+					(ASSERTION-ERROR	
 											(incf errors)
 											(report-assertion-progress :error))
 
-					(assertion-passed		
+					(ASSERTION-PASSED		
 											(incf passed)
 											(report-assertion-progress :pass)
 											(invoke-restart restart))	; We do not invoke the debugger for successful assertions.
 		
-					((or assertion-failed assertion-forced-fail)
+					((or ASSERTION-FAILED ASSERTION-FAIL-FORCED)
+											(if passed-p
+												(setf passed-p nil))
 											(incf failed)
 											(report-assertion-progress :fail)))))
 			(if *stop-on-fail*

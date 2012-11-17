@@ -11,3 +11,7 @@
 		(print-format clunit-report *clunit-report-format* stream)
 		(call-next-method)))
 
+(defmethod print-object ((clunit-test-report clunit-test-report) stream)
+	(if (member *clunit-report-format* '(:default :tap))
+		(print-format clunit-test-report *clunit-report-format* stream)
+		(call-next-method)))
