@@ -11,7 +11,7 @@
 						 					
 						(:module "classes" 
 							:components
-								((:file "classes")
+								((:file "assertion-conditions")
 								 (:file "clunit-report")
 								 (:file "clunit-test-case")
 								 (:file "clunit-test-suite")
