@@ -66,7 +66,6 @@ The test case body is revaluated on each run, so any redefinition of macros and 
 						(block ,name
 							(with-test-restart
 								(let ((*test-name* ',name) (body '(progn ,@body)))
-									(report-test-progress ',name *suite-name*)
 									(when *suite-name*																	; If test was not called by any test suite, then do not attempt to expand out any fixtures.
 										(dolist (suite (reverse *suite-name*) body)										; However, if the test is being executed in a context with one or more test suites,
 											(setf body (expand-fixture suite body))))									; expand out the fixtures starting with the most specific

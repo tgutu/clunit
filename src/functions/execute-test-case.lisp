@@ -3,20 +3,27 @@
 
 ;; EXECUTE-TEST-CASE Algorithm:
 ;; 1. Create a CLUNIT-TEST-REPORT instance.
-;; 2. Push it on the the TEST-REPORTS slot of *CLUNIT-REPORT*.
-;; 3. If we have depencies check if *CLUNIT-REPORT* has a CLUNIT-TEST-REPORT for a test we depend on.
-;;    a. If there is and the test failed, skip this test.
-;;    b. If there isn't queue this test.
-;; 4. After executing a test, check if any queued test cases can now be run or should be removed from the queue.
+;; 2. Push it on to the the TEST-REPORTS slot of *CLUNIT-REPORT*.
+;; 3. Process test case depencies:
+;;    a. If a test we depend on failed or was skipped, skip this test.
+;;    b. If a test we depend on hasn't run, queue this test.
 ;;
 (defun execute-test-case (test-case)
-	(with-slots (test-function dependencies name) test-case
+	(with-slots (test-function name) test-case
 		(let ((*clunit-test-report* (make-instance 'clunit-test-report :test-name name :suite-list *suite-name*)))
-			(push *clunit-test-report* (slot-value *clunit-report* 'test-reports))	
-			;; Check for dependencies
-			(funcall test-function)
-			;; Check if any queued functions have had their dependency requirement met by this function having run.
-			)))
+			(push *clunit-test-report* (slot-value *clunit-report* 'test-reports))
+			(report-test-progress name *suite-name*)
+			(ecase (test-case-execution-action test-case)
+				(:run		(funcall test-function))
+
+				(:skip		(if *report-progress*
+								(format *standard-output* "[SKIPPED]"))
+							(setf (slot-value *clunit-test-report* 'skipped-p) t))
+					
+				(:queue		(if *report-progress*
+								(format *standard-output* "[QUEUED]"))
+							(push *clunit-test-report* *queued-test-reports*))))))
+
 
 
 (defun run-test (test &key use-debugger (report-progress t) stop-on-fail)
@@ -35,8 +42,9 @@ If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any asse
 						(warning #'muffle-warning))
 			(restart-case
 				(progn
-					(if *report-progress*
+					(if *report-progress* 
 						(format *standard-output* "~%PROGRESS:~%========="))
+					(setf *queued-tests* (list) *last-clunit-report* *clunit-report*)
 					(execute-test-case test-case))
 				(cancel-unit-test () 
 					:report (lambda (s) (format s "Cancel unit test execution."))
