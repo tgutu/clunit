@@ -1,9 +1,10 @@
 (in-package :clunit)
 
-;;; The special treatment I have to give to the non-standard formatting behaviour in clisp is really beginning to piss me off.
+;; README!!!! 
+;; The pretty printing in CLISP is really broken so we just try has hard as can to compensate.
 (defmethod print-format ((clunit-report clunit-report) (format (eql :default)) stream)
 	(pprint-logical-block (stream nil)
-		(with-slots (passed failed errors test-reports) clunit-report
+		(with-slots (passed failed errors skipped test-reports) clunit-report
 			#-clisp (format stream "~:@_DETAILS:~:@_~4:I=========")
 			#+clisp (format stream "~:@_DETAILS:~:@_~8I=========")
 			(let (suite)
@@ -17,7 +18,8 @@
 			#-clisp (format stream	"~:@_~I~:@_SUMMARY:~:@_========")
 			#+clisp (format stream	"~:@_~-8I~:@_SUMMARY:~:@_========")
 			(let ((total (+ passed failed errors)))
-				(format stream	"~4I~:@_Executed ~D test function~:P.~:@_Tested ~D assertion~:P.~8I" (length test-reports) total)
+				#-clisp (format stream	"~4I~:@_Test functions:~8I~:@_Executed: ~D~:@_Skipped:  ~D~4I~:@_~:@_Tested ~D assertion~:P.~8I"		(- (length test-reports) skipped) skipped total)
+				#+clisp (format stream	"~4I~:@_Test functions:~8I~:@_Executed: ~D~:@_Skipped:  ~D~-8I~:@_~:@_Tested ~D assertion~:P.~8I"	(- (length test-reports) skipped) skipped total)
 				(unless (zerop total)
 					(format stream	"~:@_Passed: ~D/~D (~5,1F%)" passed total (* 100 (/ passed total)))
 					(format stream	"~:@_Failed: ~D/~D (~5,1F%)" failed total (* 100 (/ failed total)))
@@ -28,8 +30,7 @@
 	(with-slots (test-name assertion-conditions) report
 		(dolist (condition assertion-conditions)
 			(unless (typep condition 'assertion-passed)
-				#-clisp (format stream "~:@_~S: ~<~:W~:>~:@_" test-name condition)
-				#+clisp (format stream "~:@_~S: ~8I~:W~:@_" test-name condition)))))
+				(format stream "~:@_~S: ~<~:W~:>~:@_" test-name condition)))))
 
 
 (defmethod print-format ((condition assertion-error) (format (eql :default)) stream)
