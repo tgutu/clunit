@@ -2,15 +2,14 @@
 
 ;; The DEFTEST macro has three possible forms:
 ;;
-;; (deftest name () . body)
+;;	1. Define a test case not associated with any test suite and with no dependencies.
+;;		(deftest name () . body)
+;;						
+;;	2. Define a test case which is associated with test suites: suite1 ... suiteN.
+;;		(deftest name (suite1 suite2 ... suiteN) . body)
 ;;
-;; (deftest name (suite1 suite2 ... suiteN) . body)
-;;
-;; (deftest name ((suite1 suite2 ... suiteN) (test1 test2 ... testN)) . body)
-;;
-;; The first form defines a test case which is not associated with any test suite or has any dependencies.
-;; The second form defines a test case which is associated with test suites: suite1 ... suiteN
-;; The third form defines a test case associated with zero or more test suites and depends on zero or more tests.
+;;	3. Define a test case associated with test suites: suite1 ... suiteN and depends on tests: test1 ... testN.
+;;		(deftest name ((suite1 suite2 ... suiteN) (test1 test2 ... testN)) . body)
 ;;
 ;; DEFTEST Algorithm:
 ;; 1. Establish the DEFTEST form used.
@@ -23,7 +22,7 @@
 ;; 6. Create new test suite instance and add it to lookup table.
 ;;
 (defmacro deftest (name declarations &body body)
-	"Defines a test case called NAME. DECLARATIONS identifies the test suites this test case is associated with as well as any other test cases that it depends on.
+	"Defines a test case called NAME. DECLARATIONS declares which test suites this test case is associated with as well as any other test cases that it depends on.
 The test case body is revaluated on each run, so any redefinition of macros and inline functions will be automatically visible without having to redefine the test."
 	(with-gensyms (parent-suites test-dependencies test-function)
 		`(let ((,parent-suites ',declarations) ,test-dependencies ,test-function)

@@ -6,7 +6,10 @@
 ;;;
 ;;; DD/MM/YY
 ;;; 10/11/12	Redefined methods of the generic function EXPAND-FIXTURE to specialize on the test suite name instead of class to solve some fringe cases with unintended effects. [THMG]
-;;; 10/11/17	Reduced the use of generic functions internally, now its a combination of hash table lookups and stored objects.
-				Added support for explicit function test dependency declarations.
-				Added support for automatic re-run of failed tests via (rerun-failed-tests)
-				[THMG]
+;;;
+;;; 17/11/12	Reduced the use of generic functions internally, now its a combination of hash table lookups and stored objects.
+;;;				Added support for explicit function test dependency declarations.
+;;;				Added support for automatic re-run of failed tests via (RERUN-FAILED-TESTS)
+;;;				[THMG]
+;;;
+;;; 18/11/12	Added extra assertion test forms: ASSERT-EQUALITY and ASSERT-FAIL. [THMG]

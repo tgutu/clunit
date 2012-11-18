@@ -38,8 +38,3 @@ CLUnit TODO
 	The unit test framework provides so much more to make up for its
 	performance, so maybe its something we might be willing to live with,
 	atleast for now.
-
-
-2.	ASSERT-EQUALITY? (See lisp-unit)
-	Assertion form that takes a test function as an argument. Basically its
-	an (assert-**** value expression) form were you provide	the **** function.

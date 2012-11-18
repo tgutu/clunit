@@ -48,5 +48,5 @@
 (defmethod print-format ((condition assertion-fail-forced) (format (eql :default)) stream)
 	(pprint-logical-block (stream nil)
 		(with-slots (format-string args) condition
-			(format stream format-string args))))
+			(format stream "~?" format-string args))))
 

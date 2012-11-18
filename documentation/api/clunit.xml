@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.1.0">
+<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.2.0">
 	<description>
 		<p>
 			<b>CLUnit</b> is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
@@ -50,7 +50,8 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					Evaluates EXPRESSION as an assertion, an assertion passes if it returns NIL. FORMS and their values are printed if the test fails.
+					Evaluates EXPRESSION as an assertion, an assertion passes if it returns NIL. FORMS and their values are printed if the test fails.<br/>
+					<code>(assert-false (= 1 2)) ; This assertion passes.</code>
 				</p>
 			</description>
 		</symbol>
@@ -83,7 +84,20 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUAL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUAL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.<br/>
+					<code>
+						(let ((q (+ 2 -2)))<br/>
+						&#160;&#160;&#160;(assert-equal 4 q q))<br/>
+						;; This assertion fails and prints the message below with *clunit-report-format* set to :DEFAULT.
+						<div style="background-color:black; color:green;">
+							&#160;<br/>
+							Expression: (EQUAL 4 Q)<br/>
+							Expected: 4<br/>
+							Returned: 0<br/>
+							Q => 0<br/>
+							&#160;<br/>
+						</div>
+					</code>
 				</p>
 			</description>
 		</symbol>
@@ -95,6 +109,19 @@
 			<description>
 				<p>
 					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUALP VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-equality" type="Macro">
+			<argument  value-type="FUNCTION" arg-type="required" name="test"/>
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL TEST VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.<br/>
+					<code>(assert-equality #'string= "some string" "another string") ; This assertion fails.</code>
 				</p>
 			</description>
 		</symbol>
@@ -120,25 +147,42 @@
 			</description>
 		</symbol>
 		
-		<symbol name="deffixture" type="Macro">
-			<argument  value-type="SYMBOL" arg-type="required" name="suite"/>
-			<argument  value-type="SYMBOL" arg-type="required" name="(plug)"/>
-			<argument  value-type="LIST" arg-type="body" name="body"/>
+		<symbol name="assert-fail" type="Function">
+			<argument  value-type="STRING" arg-type="required" name="format-string"/>
+			<argument  value-type="t" arg-type="rest" name="args"/>
 			<description>
 				<p>
-					A fixture defines a code template that is wrapped around the code of each test case and test suite that inherits from SUITE. The test case body is plugged into the template at the position identified by PLUG.
-					Fixtures are expanded at runtime, so the fixture that will wrap around a test depends on the test suite call stack.
+					Calling this function is equivalent to signalling a failed assertion. The FORMAT-STRING and ARGS are used to print the failure message as follows:
+					<code>(format stream "~?" format-string args)</code>
+					If you want to achieve a nice looking output message, use pretty printing directives in the format string e.g. "~:@_" instead of "%".
 				</p>
 			</description>
 		</symbol>
 		
 		<symbol name="deftest" type="Macro">
 			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
-			<argument  value-type="LIST" arg-type="body" name="body"/>
+			<argument  value-type="LIST" arg-type="required" name="declarations"/>
+			<argument  value-type="t" arg-type="body" name="body"/>
 			<description>
 				<p>
-					Defines a test case called TEST-NAME. If PARENT-SUITES is non-NIL, a reference to the test is added to each test suite, otherwise its a suiteless test.
+					Defines a test case called NAME. DECLARATIONS declares which test suites this test case is associated with as well as any other test cases that it depends on.<br/>
 					The test case body is revaluated on each run, so any redefinition of macros and inline functions will be automatically visible without having to redefine the test.
+				</p>
+				<p>
+					A test case will be queued until all tests cases it depends on have been run. If all the test cases pass the queued test is executed otherwise its skipped.
+				</p>
+				<p>
+					The DEFTEST macro has three possible forms:
+					<code>
+						;; Define a test case not associated with any test suite and with no dependencies.<br/>
+						<b>(deftest name () . body)</b><br/><br/>
+						
+						;; Define a test case which is associated with test suites: <b><i>suite1 ... suiteN.</i></b><br/>
+						<b>(deftest name (suite1 suite2 ... suiteN) . body)</b><br/><br/>
+						
+						;; Define a test case associated with test suites: <b><i>suite1 ... suiteN</i></b> and depends on tests: <b><i>test1 ... testN</i></b>.<br/>
+						<b>(deftest name ((suite1 suite2 ... suiteN) (test1 test2 ... testN)) . body)</b>
+					</code>
 				</p>
 			</description>
 		</symbol>
@@ -150,6 +194,27 @@
 				<p>
 					Defines a test suite called NAME. If PARENTS is non-NIL, the test suite is defined as a sub-suite of each of the test suites in PARENTS.
 				</p>
+				<code>
+					(defsuite arithmetic ())<br/>
+					(defsuite arithmetic-+ (arithmetic))
+				</code>
+			</description>
+		</symbol>
+		
+		<symbol name="deffixture" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="suite"/>
+			<argument  value-type="SYMBOL" arg-type="required" name="(plug)"/>
+			<argument  value-type="LIST" arg-type="body" name="body"/>
+			<description>
+				<p>
+					A fixture defines a code template that is wrapped around the code of each test case and test suite that inherits from SUITE. The test case body is plugged into the template at the position identified by PLUG.
+					Fixtures are expanded at runtime, so the fixture that will wrap around a test depends on the test suite call stack.
+				</p>
+				<code>
+					(deffixture arithmetic (@body)<br/>
+					&#160;&#160;(let ((x 0) (y 1) (z 2))<br/>
+					&#160;&#160;&#160;&#160;@body))
+				</code>
 			</description>
 		</symbol>
 		
@@ -193,6 +258,19 @@
 				<p>
 					Executes a test suite called NAME. If REPORT-PROGRESS is non-NIL, the test progress is reported. If USE-DEBUGGER is non-NIL, the debugger is invoked whenever an assertion fails.
 					If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any assertion fails or an error occurs.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="rerun-failed-tests" type="Function">
+			<argument  value-type="(or t nil)" arg-type="key" name='(report-progress t)'/>
+			<argument  value-type="(or t nil)" arg-type="key" name="use-debugger"/>
+			<argument  value-type="(or t nil)" arg-type="key" name="stop-on-fail"/>
+			<argument  value-type="(or t nil)" arg-type="key" name='(last-report *last-clunit-report*)'/>
+			<description>
+				<p>
+					Reruns all failed tests recorded in LAST-REPORT which defaults to the report of the previous test run. If REPORT-PROGRESS is non-NIL, the test progress is reported.
+					If USE-DEBUGGER is non-NIL, the debugger is invoked whenever an assertion fails. If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any assertion fails or an error occurs.
 				</p>
 			</description>
 		</symbol>
