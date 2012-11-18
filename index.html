@@ -48,33 +48,33 @@
 </ul><h3>Table of Contents</h3>
 
 <ol>
-<li>Documentation</li>
-<li>Tutorial
+<li><a href='#clunit_1'>Documentation</a></li>
+<li><a href='#clunit_2'>Tutorial</a>
 
 <ol>
-<li> Creating the test hierarchy</li>
-<li> Defining a test</li>
-<li> Running our first test</li>
-<li> Rerunning failed tests</li>
-<li> Changing the report format</li>
-<li> Controlling diagnostic output</li>
-<li> Interactive tests</li>
-<li> Defining and using fixtures</li>
-<li> Short circuiting a unit test</li>
-<li>Test dependency</li>
+<li><a href='#clunit_3'>Creating the test hierarchy</a></li>
+<li><a href='#clunit_4'>Defining a test</a></li>
+<li><a href='#clunit_5'>Running our first test</a></li>
+<li><a href='#clunit_6'>Rerunning failed tests</a></li>
+<li><a href='#clunit_7'>Changing the report format</a></li>
+<li><a href='#clunit_8'>Controlling diagnostic output</a></li>
+<li><a href='#clunit_9'>Interactive tests</a></li>
+<li><a href='#clunit_10'>Defining and using fixtures</a></li>
+<li><a href='#clunit_11'>Short circuiting a unit test</a></li>
+<li style='margin-left: -0.5em;'><a href='#clunit_12'>Test dependency</a></li>
 </ol>
 </li>
-</ol><h4>Documentation</h4>
+</ol><h4 id='clunit_1'>Documentation</h4>
 
 <p>The API documentation can be found <a href="api/clunit.xml" title="CLUnit Documentation">here</a>. If you are interested in the story behind CLUnit you can find it <a href="http://ml.sun.ac.za/2012/11/09/developing-a-unit-test-framework-part-1/" title="Developing a unit test framework">here</a>.</p>
 
-<h4>Tutorial</h4>
+<h4 id='clunit_2'>Tutorial</h4>
 
 <p>For this tutorial we will write a unit test for our hypothetical number crunching library. Our unit test contains four test suites and five test cases. The image below gives a visual representation of our test hierarchy.</p>
 
-<p><img src="api/images/example-test-suite.png" alt="Test suite heirarchy"><br></p>
+<p><img src="api/images/example-test-suite.png" style="width: 290px; height: 480px; position: static; display: block; margin-left: auto; margin-right: auto; text-align: center;" alt="Test suite heirarchy"/></p>
 
-<h5>Creating the test hierarchy</h5>
+<h5 id='clunit_3'>Creating the test hierarchy</h5>
 
 <p>To create the test suite hierarchy shown in the image we use the following code.</p>
 
@@ -93,7 +93,7 @@
 
 <p><br></p>
 
-<h5>Defining a test</h5>
+<h5 id='clunit_4'>Defining a test</h5>
 
 <p>Next we define two test cases for our <code>FloatSuite</code> and <code>IntegerSuite</code> test suites. Each test contains two assertion forms.</p>
 
@@ -112,7 +112,7 @@
 
 <p><br></p>
 
-<h5>Running our first test</h5>
+<h5 id='clunit_5'>Running our first test</h5>
 
 <p>To run an individual test you use the form <code>(RUN-TEST 'test-name)</code>, however we are interested in running the entire test suite so we shall use the form  <code>(RUN-SUITE 'test-name)</code>.</p>
 
@@ -181,12 +181,12 @@
 
 <p><br></p>
 
-<h5>Rerunning failed tests</h5>
+<h5 id='clunit_6'>Rerunning failed tests</h5>
 
 <p>CLUnit provides a convenient function <code>(RERUN-FAILED-TESTS)</code> for rerunning only the tests that failed the last time. When the failed tests are fixed, you do the normal run to make sure all tests pass.
 <br></p>
 
-<h5>Changing the report format</h5>
+<h5 id='clunit_7'>Changing the report format</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> return a <code>CLUNIT-REPORT</code> object, the default <code>PRINT-OBJECT</code> method prints the aggregated details of the unit test failures and a test summary. </p>
 
@@ -214,7 +214,7 @@
 
 <p><br></p>
 
-<h5>Controlling diagnostic output</h5>
+<h5 id='clunit_8'>Controlling diagnostic output</h5>
 
 <p>Apart from the mandatory arguments, the assertion forms accept additional arguments that will be printed if an error occurs. An assertion macro call then takes the the following form:</p>
 
@@ -248,7 +248,7 @@
 
 <p><br></p>
 
-<h5>Interactive tests</h5>
+<h5 id='clunit_9'>Interactive tests</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:use-debugger</code>. If this argument is set to true, the unit test will fall into the debugger if an assesrtion fails.</p>
 
@@ -275,7 +275,7 @@
 
 <p><br></p>
 
-<h5>Defining and using fixtures</h5>
+<h5 id='clunit_10'>Defining and using fixtures</h5>
 
 <p>Fixtures are used in unit tests to setup a consistent context/enviroment in which tests can be executed so that results are reproducible. CLUnit allows you to define fixtures for each test suite.</p>
 
@@ -343,7 +343,7 @@
 
 <p><br></p>
 
-<h5>Short circuiting a unit test</h5>
+<h5 id='clunit_11'>Short circuiting a unit test</h5>
 
 <p>CLUnit provides an easy way of short circuiting a unit test. The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:stop-on-fail</code>. If this argument is set to true, the rest of the unit test is cancelled when any assertion fails or an error occurs.</p>
 
@@ -370,7 +370,7 @@
         <span class="nv">Errors:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
 </pre></div>
 
-<h5>Test dependency</h5>
+<h5 id='clunit_12'>Test dependency</h5>
 
 <p>Since the execution of tests is unordered, what we need is a way of specifying that one test depends on another test passing. CLUnit provides a way of doing this via the <code>DEFTEST</code> macro.</p>
 
