@@ -5,8 +5,8 @@
 (defmethod print-format ((clunit-report clunit-report) (format (eql :default)) stream)
 	(pprint-logical-block (stream nil)
 		(with-slots (passed failed errors skipped test-reports) clunit-report
-			#-clisp (format stream "~:@_DETAILS:~:@_~4:I=========")
-			#+clisp (format stream "~:@_DETAILS:~:@_~8I=========")
+			#-clisp (format stream "~:@_FAILURE DETAILS:~:@_~4:I================")
+			#+clisp (format stream "~:@_FAILURE DETAILS:~:@_~8I================")
 			(let (suite)
 				(dolist (report test-reports)
 					(unless (equal suite (slot-value report 'suite-list))
