@@ -64,9 +64,22 @@ If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any asse
 	(remhash name *test-case-hashtable*))
 
 
+(defun defined-test-p (test-name)
+	"Returns T if a test case called TEST-NAME is defined, otherwise returns NIL."
+	(if (get-test-case test-name) t nil))
+
+
+(defun get-defined-tests ()
+	"Returns a list of all defined test case names."
+	(loop
+		:for key :being :the :hash-key :of *test-case-hashtable*
+		:collect key))
+
+
 (defun queue-test-case ()
 	(if *report-progress*
 		(format *standard-output* "[QUEUED]")))
+
 
 (defun skip-test-case ()
 	(if *report-progress*

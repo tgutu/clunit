@@ -58,16 +58,43 @@ If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any asse
 				nil))))
 
 
+(defun get-defined-suites ()
+	"Returns a list of all defined test suite names."
+	(loop
+		:for key :being :the :hash-key :of *test-suite-hashtable*
+		:collect key))
+
+
 (defun get-test-suite (name)
 	"Retrieves the TEST-SUITE instance associated with the key NAME in the hash table *TEST-SUITES*"
 	(gethash name *test-suite-hashtable*))
+
 
 (defun (setf get-test-suite) (new-test-suite name)
 	"Adds NEW-TEST-SUITE in the hash table *TEST-SUITES* under the key NAME."
 	(setf (gethash name *test-suite-hashtable*) new-test-suite))
 
+
+(defun defined-suite-p (suite-name)
+	"Returns T if a test suite called SUITE-NAME is defined, otherwise returns NIL."
+	(if (get-test-suite suite-name) t nil))
+
+
 (defun delete-test-suite (name)
 	"Deletes the TEST-SUITE instance associated with the key NAME in the hash table *TEST-SUITES*"
 	(remhash name *test-suite-hashtable*))
 
+
+(defun get-child-tests (suite-name)
+	"Returns a list of all test case names that are children of the suite called SUITE-NAME."
+	(let ((suite (get-test-suite suite-name)))
+		(if suite
+			(slot-value suite 'test-cases))))
+
+
+(defun get-child-suites (suite-name)
+	"Returns a list of all test suite names that are children of the suite called SUITE-NAME."
+	(let ((suite (get-test-suite suite-name)))
+		(if suite
+			(slot-value suite 'child-suites))))
 

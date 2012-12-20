@@ -13,6 +13,10 @@
 			:run-test :run-suite
 			:rerun-failed-tests
 
+			:defined-test-p :defined-suite-p
+			:get-child-tests :get-child-suites
+			:get-defined-tests :get-defined-suites
+
 			:assert-fail
 			:assert-expands
 			:assert-condition
