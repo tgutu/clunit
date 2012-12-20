@@ -274,5 +274,57 @@
 				</p>
 			</description>
 		</symbol>
+		
+		<symbol name="get-defined-tests" type="Function">
+			<description>
+				<p>
+					Returns a list of all defined test case names.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="get-defined-suites" type="Function">
+			<description>
+				<p>
+					Returns a list of all defined test suite names.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="defined-test-p" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="test-name"/>
+			<description>
+				<p>
+					Returns T if a test case called TEST-NAME is defined, otherwise returns NIL.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="defined-suite-p" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="suite-name"/>
+			<description>
+				<p>
+					Returns T if a test suite called SUITE-NAME is defined, otherwise returns NIL.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="get-child-tests" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="suite-name"/>
+			<description>
+				<p>
+					Returns a list of all test case names that are children of the suite called SUITE-NAME.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="get-child-suites" type="Function">
+			<argument  value-type="SYMBOL" arg-type="required" name="suite-name"/>
+			<description>
+				<p>
+					Returns a list of all test suite names that are children of the suite called SUITE-NAME.
+				</p>
+			</description>
+		</symbol>		
 	</symbols>
 </asdf>
