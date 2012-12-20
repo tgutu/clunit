@@ -13,3 +13,5 @@
 ;;;				[THMG]
 ;;;
 ;;; 18/11/12	Added extra assertion test forms: ASSERT-EQUALITY and ASSERT-FAIL. [THMG]
+;;;
+;;; 20/12/12	Added functions to query various information about the defined test cases and test suites e.g. returning a list of all defined test names. [THMG]
