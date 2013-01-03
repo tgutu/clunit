@@ -8,7 +8,7 @@
 (defmacro with-assert-restart (&body body)
 	"WITH-ASSERT-RESTART places a restart called SKIP-ASSERTION around an assertion form."
 	`(restart-case (progn ,@body)
-		;; Strictly speaking, there is no actual difference between the SKIP and CONTINUE restarts.
+		;; Strictly speaking, there is no actual difference between the SKIP-ASSERTION and CONTINUE restarts.
 		;; Their naming is only for conveying a semantic message when displayed in the debugger.
 		(continue () 
 			:report (lambda (s) (format s "Continue with ~S test." *test-name*))

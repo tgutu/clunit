@@ -1,6 +1,6 @@
 ;;; CLUnit: A Common Lisp Unit Testing Framework.
-;;; Author(s):		Tapiwa HM. Gutu
-;;; Maintainer(s):	Tapiwa HM. Gutu
+;;; Author(s):		Tapiwa H.M. Gutu
+;;; Maintainer(s):	Tapiwa H.M. Gutu
 ;;;
 ;;;	Update history:
 ;;;
@@ -15,3 +15,10 @@
 ;;; 18/11/12	Added extra assertion test forms: ASSERT-EQUALITY and ASSERT-FAIL. [THMG]
 ;;;
 ;;; 20/12/12	Added functions to query various information about the defined test cases and test suites e.g. returning a list of all defined test names. [THMG]
+;;;
+;;; 03/01/13	Defined a new macro UNDEFFIXTURE which is used to undefine a previously defined test suite fixture.
+;;;				Updated the documentation to include a new entry for the UNDEFFIXTURE macro.
+;;;				Modified the default error reporting function so that it skips the detailed failure reports section if there is nothing to report.
+;;;				Tweaked the reporting of ASSSERT-TRUE to say 'Expected: (NOT NIL)' instead of 'Expected: T', since it expects a generalized boolean.
+;;;				BUGFIX: The functions RUN-TEST and RERUN-FAILED-TESTS were using the undefined variable *QUEUED-TESTS* instead of *QUEUED-TEST-REPORTS*
+;;;				[THMG]

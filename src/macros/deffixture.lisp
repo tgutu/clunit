@@ -41,3 +41,8 @@ Fixtures are expanded at runtime, so the fixture that will wrap around a test de
 		(defmethod expand-fixture ((suite (eql ',suite)) body)
 			(subst body ',plug '(progn ,@body)))))
 
+
+(defmacro undeffixture (name)
+	"Remove a fixture definition."
+	`(remove-method #'expand-fixture
+		(find-method #'expand-fixture nil '((eql ,name) t) nil)))

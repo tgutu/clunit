@@ -8,7 +8,7 @@
 			:clunit-report :clunit-test-report
 
 			:deftest :defsuite :deffixture
-			:undefsuite :undeftest
+			:undefsuite :undeftest :undeffixture
 
 			:run-test :run-suite
 			:rerun-failed-tests

@@ -1,7 +1,7 @@
 (in-package :cl-user)
 
 (asdf:defsystem :clunit
-	:version "0.2.0"
+	:version "0.2.1"
 	:author "Tapiwa Gutu"
 	:components 
 		((:module "src"

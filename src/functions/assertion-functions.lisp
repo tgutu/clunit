@@ -25,6 +25,8 @@
 				(setf assertion-conditions (nconc assertion-conditions (list condition)))
 				(typecase	condition	
 					(ASSERTION-ERROR	
+											(if passed-p
+												(setf passed-p nil))
 											(incf errors)
 											(report-assertion-progress :error))
 
