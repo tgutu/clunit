@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.2.0">
+<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.2.1">
 	<description>
 		<p>
 			<b>CLUnit</b> is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
@@ -232,6 +232,15 @@
 			<description>
 				<p>
 					Undefines a previously defined test suite.
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="undeffixture" type="Macro">
+			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
+			<description>
+				<p>
+					Undefines a previously defined test suite fixture.
 				</p>
 			</description>
 		</symbol>
