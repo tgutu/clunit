@@ -20,7 +20,7 @@ If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any asse
 				(progn
 					(if *report-progress*
 						(format *standard-output* "~%PROGRESS:~%========="))
-					(setf *queued-tests* (list) *last-clunit-report* *clunit-report*)
+					(setf *queued-test-reports* (list) *last-clunit-report* *clunit-report*)
 					(execute-test-suite test-suite)
 					(when *queued-test-reports*
 						(if *report-progress*
