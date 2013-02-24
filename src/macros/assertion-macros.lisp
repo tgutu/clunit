@@ -79,17 +79,27 @@ Remember in Common Lisp any non-NIL value is true, if you want a strict binary a
 		(assertion-expander :result result :test `(equalp ,value ,result) :result-expression expression  :report-expression `(equalp ,value ,expression) :expected value :forms forms)))
 
 
-(defmacro assert-equality (test value expression &body forms)
-	"Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL TEST VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails."
+(defmacro assert-equality (value expression &body forms)
+	"Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL *clunit-equality-test* VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails."
 	(with-gensyms (result)
-		(assertion-expander :result result :test `(funcall ,test ,value ,result) :result-expression expression  :report-expression `(funcall ,test ,value ,expression) :expected value :forms forms)))
+		(assertion-expander
+			:result result
+			:test `(funcall *clunit-equality-test* ,value ,result)
+			:result-expression expression
+			:report-expression `(funcall *clunit-equality-test* ,value ,expression)
+			:expected value :forms forms)))
 
 
 ;; MACROEXPAND-1 assertion macro
 (defmacro assert-expands (&environment env expansion expression &body forms)
 	"Evaluates EXPRESSION as an assertion, an assertion passes if (EQUALP EXPANSION (MACROEXPAND-1 EXPRESSION)) returns true. FORMS and their values are printed if the test fails."
 	(with-gensyms (result)
-		(assertion-expander :result result :test `(equalp ,result ',expansion) :result-expression `(macroexpand-1 ',expression ,env)  :report-expression `(macroexpand-1 ',expression) :expected expansion :forms forms)))
+		(assertion-expander
+			:result result
+			:test `(equalp ,result ',expansion)
+			:result-expression `(macroexpand-1 ',expression ,env)
+			:report-expression `(macroexpand-1 ',expression)
+			:expected expansion :forms forms)))
 
 
 ;; Condition assertion macro.

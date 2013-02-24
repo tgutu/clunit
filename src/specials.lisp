@@ -20,6 +20,7 @@
 (defvar *clunit-report*			nil			"Holds a CLUNIT-REPORT object during a test run, used to store aggregated test reports.")
 (defvar *last-clunit-report*	nil			"Holds the last returned CLUNIT-REPORT object. Default optional argument to the function RERUN-FAILED-TESTS.")
 
+(defvar *clunit-equality-test*	#'equalp	"The equality test used to compare values by the ASSERT-EQUALITY macro.")
 
 (defvar *clunit-test-report*	nil			"Holds a CLUNIT-TEST-REPORT object for each executing test case.")
 (defvar *queued-test-reports*	nil			"A list of queued CLUNIT-TEST-REPORT objects whose test case execution has been deferred until their dependencies requirements are met.")

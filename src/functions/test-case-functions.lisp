@@ -25,7 +25,9 @@ If STOP-ON-FAIL is non-NIL, the rest of the unit test is cancelled when any asse
 				(cancel-unit-test () 
 					:report (lambda (s) (format s "Cancel unit test execution."))
 					nil)))
-		*clunit-report*))
+			
+			(setf *clunit-equality-test* #'equalp)
+			*clunit-report*))
 
 
 ;; EXECUTE-TEST-CASE Algorithm:

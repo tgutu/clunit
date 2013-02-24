@@ -62,7 +62,7 @@
 				<h3 style="color:green;">Package API</h3>
                 <div id="asdf-content">
                     <xsl:apply-templates select="symbols/symbol" mode="fulltext">
-						<!-- <xsl:sort select="@name"/> -->
+						<xsl:sort select="@name"/>
 					</xsl:apply-templates>
                 </div>
 				<br/><br/>

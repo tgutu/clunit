@@ -4,6 +4,7 @@
 	(:use :cl)
 	(:export
 			:*clunit-report-format*
+			:*clunit-equality-test*
 
 			:clunit-report :clunit-test-report
 

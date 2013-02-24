@@ -2,7 +2,21 @@
 
 (asdf:defsystem :clunit
 	:version "0.2.1"
-	:author "Tapiwa Gutu"
+	:author "Tapiwa Gutu <tgutu@ml.sun.ac.za>"
+	:licence "BSD"
+	:description "CLUnit is a Common Lisp unit testing framework."
+	:long-description 
+"CLUnit is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
+CLUnit provides a rich set of features aimed at improving your unit testing experience:
+
+*	Multiple inheritance for test suites allows you to group tests into hierarchies.
+*	Composes the test results of each test run into a single report.
+*	Allows redefinition of inline functions and macros without having to redefine your tests.
+*	Supports composable test suite fixtures.
+*	Allows for an interactive testing process which gives you access to the test environment.
+*	Provides visual feeback of the unit test progress.
+*	Extensible test reporting. Builtin support for default reporting and TAP output."
+
 	:components 
 		((:module "src"
 		  :serial t
