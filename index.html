@@ -48,33 +48,33 @@
 </ul><h3>Table of Contents</h3>
 
 <ol>
-<li><a href='#clunit_1'>Documentation</a></li>
-<li><a href='#clunit_2'>Tutorial</a>
+<li>Documentation</li>
+<li>Tutorial
 
 <ol>
-<li><a href='#clunit_3'>Creating the test hierarchy</a></li>
-<li><a href='#clunit_4'>Defining a test</a></li>
-<li><a href='#clunit_5'>Running our first test</a></li>
-<li><a href='#clunit_6'>Rerunning failed tests</a></li>
-<li><a href='#clunit_7'>Changing the report format</a></li>
-<li><a href='#clunit_8'>Controlling diagnostic output</a></li>
-<li><a href='#clunit_9'>Interactive tests</a></li>
-<li><a href='#clunit_10'>Defining and using fixtures</a></li>
-<li><a href='#clunit_11'>Short circuiting a unit test</a></li>
-<li style='margin-left: -0.5em;'><a href='#clunit_12'>Test dependency</a></li>
+<li> Creating the test hierarchy</li>
+<li> Defining a test</li>
+<li> Running our first test</li>
+<li> Rerunning failed tests</li>
+<li> Changing the report format</li>
+<li> Controlling diagnostic output</li>
+<li> Interactive tests</li>
+<li> Defining and using fixtures</li>
+<li> Short circuiting a unit test</li>
+<li>Test dependency</li>
 </ol>
 </li>
-</ol><h4 id='clunit_1'>Documentation</h4>
+</ol><h4>Documentation</h4>
 
 <p>The API documentation can be found <a href="api/clunit.xml" title="CLUnit Documentation">here</a>. If you are interested in the story behind CLUnit you can find it <a href="http://ml.sun.ac.za/2012/11/09/developing-a-unit-test-framework-part-1/" title="Developing a unit test framework">here</a>.</p>
 
-<h4 id='clunit_2'>Tutorial</h4>
+<h4>Tutorial</h4>
 
 <p>For this tutorial we will write a unit test for our hypothetical number crunching library. Our unit test contains four test suites and five test cases. The image below gives a visual representation of our test hierarchy.</p>
 
-<p><img src="api/images/example-test-suite.png" style="width: 290px; height: 480px; position: static; display: block; margin-left: auto; margin-right: auto; text-align: center;" alt="Test suite heirarchy"/></p>
+<p><img src="api/images/example-test-suite.png" alt="Test suite heirarchy"><br></p>
 
-<h5 id='clunit_3'>Creating the test hierarchy</h5>
+<h5>Creating the test hierarchy</h5>
 
 <p>To create the test suite hierarchy shown in the image we use the following code.</p>
 
@@ -93,26 +93,26 @@
 
 <p><br></p>
 
-<h5 id='clunit_4'>Defining a test</h5>
+<h5>Defining a test</h5>
 
 <p>Next we define two test cases for our <code>FloatSuite</code> and <code>IntegerSuite</code> test suites. Each test contains two assertion forms.</p>
 
-<p><code>ASSERT-TRUE</code> considers the assertion a pass if the expression supplied to it returns true and <code>(ASSERT-EQUAL value expression)</code> considers the assertion to have passed if <code>(EQUAL value expression)</code> returns true.</p>
+<p><code>ASSERT-TRUE</code> considers the assertion a pass if the expression supplied to it returns true and <code>(ASSERT-EQUALITY value expression)</code> considers the assertion to have passed if <code>(FUNCALL clunit:*clunit-equality-test* value expression)</code> returns true.</p>
 
 <div class="highlight"><pre><span class="c1">;; Define a test called TEST-INT1</span>
 <span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-int1</span> <span class="p">(</span><span class="nv">IntegerSuite</span><span class="p">)</span>
     <span class="p">(</span><span class="nv">assert-true</span>  <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">))</span>
-    <span class="p">(</span><span class="nv">assert-equal</span> <span class="mi">4</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nv">assert-equality</span> <span class="mi">4</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">)))</span>
 
 <span class="c1">;; Define a test called TEST-FLOAT1</span>
 <span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-float1</span> <span class="p">(</span><span class="nv">FloatSuite</span><span class="p">)</span>
     <span class="p">(</span><span class="nv">assert-true</span> <span class="p">(</span><span class="nb">=</span> <span class="mf">1.0</span> <span class="mf">-1.0</span><span class="p">))</span>
-    <span class="p">(</span><span class="nv">assert-equal</span> <span class="mf">4.0</span> <span class="p">(</span><span class="nb">+</span> <span class="mf">2.0</span> <span class="mf">2.0</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nv">assert-equality</span> <span class="mf">4.0</span> <span class="p">(</span><span class="nb">+</span> <span class="mf">2.0</span> <span class="mf">2.0</span><span class="p">)))</span>
 </pre></div>
 
 <p><br></p>
 
-<h5 id='clunit_5'>Running our first test</h5>
+<h5>Running our first test</h5>
 
 <p>To run an individual test you use the form <code>(RUN-TEST 'test-name)</code>, however we are interested in running the entire test suite so we shall use the form  <code>(RUN-SUITE 'test-name)</code>.</p>
 
@@ -132,8 +132,9 @@
             <span class="nv">TEST-FLOAT1:</span> <span class="nv">F.</span>
 
             <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
-<span class="nv">DETAILS:</span>
-<span class="nv">=========</span>
+
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
 
     <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
         <span class="nv">TEST-INT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span>
@@ -144,8 +145,13 @@
         <span class="nv">TEST-FLOAT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mf">1.0</span> <span class="mf">-1.0</span><span class="p">)</span>
                      <span class="nv">Expected:</span> <span class="no">T</span>
                      <span class="nv">Returned:</span> <span class="no">NIL</span>
+
 <span class="nv">SUMMARY:</span>
 <span class="nv">========</span>
+ <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">2</span>
+        <span class="nv">Skipped:</span>  <span class="mi">0</span>
+
     <span class="nv">Tested</span> <span class="mi">4</span> <span class="nv">assertions.</span>
         <span class="nv">Passed:</span> <span class="m">2/4</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
         <span class="nv">Failed:</span> <span class="m">2/4</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
@@ -159,8 +165,9 @@
 <p>The progress report can be switched off by setting the <code>:report-progress</code> keyword argument to <code>NIL</code> for example:</p>
 
 <div class="highlight"><pre><span class="p">(</span><span class="nv">run-suite</span> <span class="ss">'NumberSuite</span> <span class="ss">:report-progress</span> <span class="no">nil</span><span class="p">)</span>
-<span class="nv">DETAILS:</span>
-<span class="nv">=========</span>
+
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
 
     <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
         <span class="nv">TEST-INT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span>
@@ -171,8 +178,13 @@
         <span class="nv">TEST-FLOAT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mf">1.0</span> <span class="mf">-1.0</span><span class="p">)</span>
                      <span class="nv">Expected:</span> <span class="no">T</span>
                      <span class="nv">Returned:</span> <span class="no">NIL</span>
+
 <span class="nv">SUMMARY:</span>
 <span class="nv">========</span>
+ <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">2</span>
+        <span class="nv">Skipped:</span>  <span class="mi">0</span>
+
     <span class="nv">Tested</span> <span class="mi">4</span> <span class="nv">assertions.</span>
         <span class="nv">Passed:</span> <span class="m">2/4</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
         <span class="nv">Failed:</span> <span class="m">2/4</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
@@ -181,12 +193,12 @@
 
 <p><br></p>
 
-<h5 id='clunit_6'>Rerunning failed tests</h5>
+<h5>Rerunning failed tests</h5>
 
 <p>CLUnit provides a convenient function <code>(RERUN-FAILED-TESTS)</code> for rerunning only the tests that failed the last time. When the failed tests are fixed, you do the normal run to make sure all tests pass.
 <br></p>
 
-<h5 id='clunit_7'>Changing the report format</h5>
+<h5>Changing the report format</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> return a <code>CLUNIT-REPORT</code> object, the default <code>PRINT-OBJECT</code> method prints the aggregated details of the unit test failures and a test summary. </p>
 
@@ -214,7 +226,7 @@
 
 <p><br></p>
 
-<h5 id='clunit_8'>Controlling diagnostic output</h5>
+<h5>Controlling diagnostic output</h5>
 
 <p>Apart from the mandatory arguments, the assertion forms accept additional arguments that will be printed if an error occurs. An assertion macro call then takes the the following form:</p>
 
@@ -229,8 +241,8 @@
 
 <span class="p">(</span><span class="nv">run-test</span> <span class="ss">'test-suiteless</span> <span class="ss">:report-progress</span> <span class="no">nil</span><span class="p">)</span>
 
-<span class="nv">DETAILS:</span>
-<span class="nv">=========</span>
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
     <span class="nv">TEST-SUITELESS:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">A</span> <span class="nv">B</span> <span class="nv">C</span><span class="p">)</span>
                     <span class="nv">Expected:</span> <span class="no">T</span>
                     <span class="nv">Returned:</span> <span class="no">NIL</span>
@@ -238,8 +250,13 @@
                     <span class="nv">A</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
                     <span class="nv">B</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
                     <span class="nv">C</span> <span class="nv">=&gt;</span> <span class="mi">3</span>
+
 <span class="nv">SUMMARY:</span>
 <span class="nv">========</span>
+    <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">1</span>
+        <span class="nv">Skipped:</span>  <span class="mi">0</span>
+
     <span class="nv">Tested</span> <span class="mi">1</span> <span class="nv">assertion.</span>
         <span class="nv">Passed:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
         <span class="nv">Failed:</span> <span class="m">1/1</span> <span class="p">(</span><span class="nv">100.0%</span><span class="p">)</span>
@@ -248,7 +265,7 @@
 
 <p><br></p>
 
-<h5 id='clunit_9'>Interactive tests</h5>
+<h5>Interactive tests</h5>
 
 <p>The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:use-debugger</code>. If this argument is set to true, the unit test will fall into the debugger if an assesrtion fails.</p>
 
@@ -275,7 +292,7 @@
 
 <p><br></p>
 
-<h5 id='clunit_10'>Defining and using fixtures</h5>
+<h5>Defining and using fixtures</h5>
 
 <p>Fixtures are used in unit tests to setup a consistent context/enviroment in which tests can be executed so that results are reproducible. CLUnit allows you to define fixtures for each test suite.</p>
 
@@ -293,8 +310,7 @@
 <span class="c1">;; Test Case Definition</span>
 <span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-bool1</span> <span class="p">(</span><span class="nv">BooleanSuite</span><span class="p">)</span>
     <span class="p">(</span><span class="nv">assert-true</span>  <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span>
-    <span class="p">(</span><span class="nv">assert-true</span>  <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">)</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">)</span>
-    <span class="p">(</span><span class="nv">abracadabra</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">assert-true</span>  <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">)</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span>
 
 <span class="p">(</span><span class="nv">run-suite</span> <span class="ss">'NumberSuite</span><span class="p">)</span>
 
@@ -304,25 +320,19 @@
     <span class="nv">NUMBERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
 
         <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+            <span class="nv">TEST-INT1:</span> <span class="nv">F.</span>
 
             <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
-                <span class="nv">TEST-BOOL1:</span> <span class="o">.</span><span class="nv">FE</span>
+                <span class="nv">TEST-BOOL1:</span> <span class="o">.</span><span class="nv">F</span>
 
         <span class="nv">FLOATSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+            <span class="nv">TEST-FLOAT1:</span> <span class="nv">F.</span>
 
             <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
-                <span class="nv">TEST-BOOL1:</span> <span class="o">.</span><span class="nv">FE</span>
-<span class="nv">DETAILS:</span>
-<span class="nv">=========</span>
+                <span class="nv">TEST-BOOL1:</span> <span class="o">.</span><span class="nv">F</span>
 
-    <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
-        <span class="nv">TEST-BOOL1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">X</span> <span class="nv">Y</span> <span class="nv">Z</span><span class="p">)</span>
-                    <span class="nv">Expected:</span> <span class="no">T</span>
-                    <span class="nv">Returned:</span> <span class="no">NIL</span>
-                    <span class="nv">X</span> <span class="nv">=&gt;</span> <span class="mi">0</span>
-                    <span class="nv">Y</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
-                    <span class="nv">Z</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
-        <span class="nv">TEST-BOOL1:</span> <span class="nv">The</span> <span class="k">function</span> <span class="nv">COMMON-LISP-USER::ABRACADABRA</span> <span class="nv">is</span> <span class="nv">undefined.</span>
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
 
     <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">FLOATSUITE</span> <span class="nv">-&gt;</span> <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
         <span class="nv">TEST-BOOL1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">X</span> <span class="nv">Y</span> <span class="nv">Z</span><span class="p">)</span>
@@ -331,19 +341,44 @@
                     <span class="nv">X</span> <span class="nv">=&gt;</span> <span class="mf">0.0</span>
                     <span class="nv">Y</span> <span class="nv">=&gt;</span> <span class="mf">1.0</span>
                     <span class="nv">Z</span> <span class="nv">=&gt;</span> <span class="mf">2.0</span>
-        <span class="nv">TEST-BOOL1:</span> <span class="nv">The</span> <span class="k">function</span> <span class="nv">COMMON-LISP-USER::ABRACADABRA</span> <span class="nv">is</span> <span class="nv">undefined.</span>
+                    <span class="nv">This</span> <span class="nv">test</span> <span class="nv">is</span> <span class="nv">meant</span> <span class="nv">to</span> <span class="nv">fail.</span>
+
+    <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">FLOATSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+        <span class="nv">TEST-FLOAT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mf">1.0</span> <span class="mf">-1.0</span><span class="p">)</span>
+                     <span class="nv">Expected:</span> <span class="no">T</span>
+                     <span class="nv">Returned:</span> <span class="no">NIL</span>
+
+    <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">BOOLEANSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+        <span class="nv">TEST-BOOL1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">X</span> <span class="nv">Y</span> <span class="nv">Z</span><span class="p">)</span>
+                    <span class="nv">Expected:</span> <span class="no">T</span>
+                    <span class="nv">Returned:</span> <span class="no">NIL</span>
+                    <span class="nv">X</span> <span class="nv">=&gt;</span> <span class="mi">0</span>
+                    <span class="nv">Y</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
+                    <span class="nv">Z</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
+                    <span class="nv">This</span> <span class="nv">test</span> <span class="nv">is</span> <span class="nv">meant</span> <span class="nv">to</span> <span class="nv">fail.</span>
+
+
+    <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+        <span class="nv">TEST-INT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span>
+                   <span class="nv">Expected:</span> <span class="no">T</span>
+                   <span class="nv">Returned:</span> <span class="no">NIL</span>
 
 <span class="nv">SUMMARY:</span>
 <span class="nv">========</span>
-    <span class="nv">Tested</span> <span class="mi">6</span> <span class="nv">assertions.</span>
-        <span class="nv">Passed:</span> <span class="m">2/6</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
-        <span class="nv">Failed:</span> <span class="m">2/6</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
-        <span class="nv">Errors:</span> <span class="m">2/6</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
+    <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">4</span>
+        <span class="nv">Skipped:</span>  <span class="mi">0</span>
+
+    <span class="nv">Tested</span> <span class="mi">8</span> <span class="nv">assertions.</span>
+        <span class="nv">Passed:</span> <span class="m">4/8</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
+        <span class="nv">Failed:</span> <span class="m">4/8</span> <span class="p">(</span> <span class="nv">50.0%</span><span class="p">)</span>
+        <span class="nv">Errors:</span> <span class="m">0/8</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
+
 </pre></div>
 
 <p><br></p>
 
-<h5 id='clunit_11'>Short circuiting a unit test</h5>
+<h5>Short circuiting a unit test</h5>
 
 <p>CLUnit provides an easy way of short circuiting a unit test. The functions <code>RUN-SUITE</code> and <code>RUN-TEST</code> accept another keyword argument called <code>:stop-on-fail</code>. If this argument is set to true, the rest of the unit test is cancelled when any assertion fails or an error occurs.</p>
 
@@ -355,22 +390,28 @@
 
         <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
             <span class="nv">TEST-INT1:</span> <span class="nv">F</span>
-<span class="nv">DETAILS:</span>
-<span class="nv">=========</span>
+
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
 
     <span class="nv">NUMBERSUITE</span> <span class="nv">-&gt;</span> <span class="nv">INTEGERSUITE:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
         <span class="nv">TEST-INT1:</span> <span class="nv">Expression:</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span>
                    <span class="nv">Expected:</span> <span class="no">T</span>
                    <span class="nv">Returned:</span> <span class="no">NIL</span>
+
 <span class="nv">SUMMARY:</span>
 <span class="nv">========</span>
+    <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">1</span>
+        <span class="nv">Skipped:</span>  <span class="mi">0</span>
+
     <span class="nv">Tested</span> <span class="mi">1</span> <span class="nv">assertion.</span>
         <span class="nv">Passed:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
         <span class="nv">Failed:</span> <span class="m">1/1</span> <span class="p">(</span><span class="nv">100.0%</span><span class="p">)</span>
         <span class="nv">Errors:</span> <span class="m">0/1</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
 </pre></div>
 
-<h5 id='clunit_12'>Test dependency</h5>
+<h5>Test dependency</h5>
 
 <p>Since the execution of tests is unordered, what we need is a way of specifying that one test depends on another test passing. CLUnit provides a way of doing this via the <code>DEFTEST</code> macro.</p>
 
@@ -387,6 +428,62 @@
 </pre></div>
 
 <p>A test case with dependencies will be queued until all the test cases it depends on have been run. If all the test cases pass the queued test is executed otherwise its skipped.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">defsuite</span> <span class="nv">arithmetic</span> <span class="p">())</span>
+
+<span class="p">(</span><span class="nv">defsuite</span> <span class="nv">arithmetic-*</span> <span class="p">(</span><span class="nv">arithmetic</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">defsuite</span> <span class="nv">arithmetic-+</span> <span class="p">(</span><span class="nv">arithmetic</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-mult0</span> <span class="p">(</span><span class="nv">arithmetic-*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">assert-condition</span> <span class="kt">arithmetic-error</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)))</span>
+
+<span class="c1">;; TEST-MULT1 depends on TEST-MULT0.</span>
+<span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-mult1</span> <span class="p">((</span><span class="nv">arithmetic-*</span><span class="p">)</span> <span class="p">(</span><span class="nv">test-mult0</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">assert-fail</span> <span class="s">"This is a forced fail by ~S."</span> <span class="ss">:derp</span><span class="p">))</span>
+
+<span class="c1">;; TEST-ADD1 depends on TEST-MULT1.</span>
+<span class="p">(</span><span class="nv">deftest</span> <span class="nv">test-add1</span> <span class="p">((</span><span class="nv">arithmetic-+</span><span class="p">)</span> <span class="p">(</span><span class="nv">test-mult1</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">assert-true</span> <span class="no">t</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">run-suite</span> <span class="ss">'arithmetic</span><span class="p">)</span>
+
+<span class="nv">PROGRESS:</span>
+<span class="nv">=========</span>
+
+    <span class="nv">ARITHMETIC:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+
+        <span class="nv">ARITHMETIC-+:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+            <span class="nv">TEST-ADD1:</span> <span class="nv">[QUEUED]</span>
+
+        <span class="nv">ARITHMETIC-*:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+            <span class="nv">TEST-MULT1:</span> <span class="nv">[QUEUED]</span>
+            <span class="nv">TEST-MULT0:</span> <span class="o">..</span>
+
+<span class="nv">QUEUED</span> <span class="nv">TESTS:</span>
+<span class="nv">=============</span>
+    <span class="nv">TEST-MULT1:</span> <span class="nv">F</span>
+    <span class="nv">TEST-ADD1:</span> <span class="nv">[SKIPPED]</span>
+
+<span class="nv">FAILURE</span> <span class="nv">DETAILS:</span>
+<span class="nv">================</span>
+
+    <span class="nv">ARITHMETIC</span> <span class="nv">-&gt;</span> <span class="nv">ARITHMETIC-*:</span> <span class="p">(</span><span class="nv">Test</span> <span class="nv">Suite</span><span class="p">)</span>
+        <span class="nv">TEST-MULT1:</span> <span class="nv">This</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">forced</span> <span class="nv">fail</span> <span class="nv">by</span> <span class="ss">:DERP.</span>
+
+
+<span class="nv">SUMMARY:</span>
+<span class="nv">========</span>
+    <span class="nv">Test</span> <span class="nv">functions:</span>
+        <span class="nv">Executed:</span> <span class="mi">2</span>
+        <span class="nv">Skipped:</span>  <span class="mi">1</span>
+
+    <span class="nv">Tested</span> <span class="mi">3</span> <span class="nv">assertions.</span>
+        <span class="nv">Passed:</span> <span class="m">2/3</span> <span class="p">(</span> <span class="nv">66.7%</span><span class="p">)</span>
+        <span class="nv">Failed:</span> <span class="m">1/3</span> <span class="p">(</span> <span class="nv">33.3%</span><span class="p">)</span>
+        <span class="nv">Errors:</span> <span class="m">0/3</span> <span class="p">(</span>  <span class="nv">0.0%</span><span class="p">)</span>
+
+</pre></div>
 
 <h5>Thats all there is to it, so happy hacking!!!</h5>
       </section>
