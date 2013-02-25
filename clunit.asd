@@ -1,7 +1,7 @@
 (in-package :cl-user)
 
 (asdf:defsystem :clunit
-	:version "0.2.1"
+	:version "0.2.3"
 	:author "Tapiwa Gutu <tgutu@ml.sun.ac.za>"
 	:licence "BSD"
 	:description "CLUnit is a Common Lisp unit testing framework."

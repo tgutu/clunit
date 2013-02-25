@@ -45,7 +45,7 @@
 	"Evaluates EXPRESSION as an assertion, an assertion passes if it returns any non-NIL value. FORMS and their values are printed if the test fails.
 Remember in Common Lisp any non-NIL value is true, if you want a strict binary assertion test use (assert-eq t expression) instead."
 	(with-gensyms (result)
-		(assertion-expander :result result :test result :result-expression expression :report-expression expression :expected '(not nil) :forms forms)))
+		(assertion-expander :result result :test result :result-expression expression :report-expression expression :expected t :forms forms)))
 
 
 (defmacro assert-false (expression &body forms)
@@ -108,7 +108,9 @@ Remember in Common Lisp any non-NIL value is true, if you want a strict binary a
 	`(with-assert-restart
 		(handler-case 
 			(progn
-				,expression
+				;; We pass the expression to EVAL because constant folding in the SBCL compiler removes intentional errors like (/ 1 0).
+				;; I don't completely understand the reason for removing a constant that signals an error from the compiled code.
+				(eval ',expression)
 				(signal-assertion :fail :expression ',expression :expected ',condition :forms (list ,@(form-expander forms))))
 			
 			(,condition ()
