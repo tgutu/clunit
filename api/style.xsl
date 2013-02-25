@@ -7,7 +7,7 @@
                 <title>
                     <xsl:value-of select="@name" /> API
                 </title>
-                <link href="css/style.css" rel="stylesheet" type="text/css" />
+                <link href="style.css" rel="stylesheet" type="text/css" />
             </head>
 
             <body>                
@@ -62,7 +62,7 @@
 				<h3 style="color:green;">Package API</h3>
                 <div id="asdf-content">
                     <xsl:apply-templates select="symbols/symbol" mode="fulltext">
-						<!-- <xsl:sort select="@name"/> -->
+						<xsl:sort select="@name"/>
 					</xsl:apply-templates>
                 </div>
 				<br/><br/>
