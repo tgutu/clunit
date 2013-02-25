@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.2.1">
+<asdf name="CLUnit" author="Tapiwa Gutu"  version="0.2.3">
 	<description>
 		<p>
 			<b>CLUnit</b> is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
@@ -71,7 +71,6 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					<b>DEPRECEATED. See <a href="#assert-equality">assert-equality</a>.</b><br/>
 					Evaluates EXPRESSION as an assertion, an assertion passes if (EQ VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
 				</p>
 			</description>
@@ -83,7 +82,6 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					<b>DEPRECEATED. See <a href="#assert-equality">assert-equality</a>.</b><br/>
 					Evaluates EXPRESSION as an assertion, an assertion passes if (EQL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
 				</p>
 			</description>
@@ -95,7 +93,6 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					<b>DEPRECEATED. See <a href="#assert-equality">assert-equality</a>.</b><br/>
 					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUAL VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.<br/>
 					<code>
 						(let ((q (+ 2 -2)))<br/>
@@ -120,13 +117,25 @@
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
-					<b>DEPRECEATED. See <a href="#assert-equality">assert-equality</a>.</b><br/>
 					Evaluates EXPRESSION as an assertion, an assertion passes if (EQUALP VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.
 				</p>
 			</description>
 		</symbol>
 		
 		<symbol name="assert-equality" type="Macro">
+			<argument  value-type="FUNCTION" arg-type="required" name="test"/>
+			<argument  value-type="t" arg-type="required" name="value"/>
+			<argument  value-type="t" arg-type="required" name="expression"/>
+			<argument  value-type="LIST" arg-type="body" name="forms"/>
+			<description>
+				<p>
+					Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL TEST VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.<br/>
+					<code>(assert-equality #'string= "some string" "another string") ; This assertion fails.</code>
+				</p>
+			</description>
+		</symbol>
+		
+		<symbol name="assert-equality*" type="Macro">
 			<argument  value-type="t" arg-type="required" name="value"/>
 			<argument  value-type="t" arg-type="required" name="expression"/>
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
@@ -135,7 +144,7 @@
 					Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL *CLUNIT-EQUALITY-TEST* VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails.<br/>
 					<code>
 						(let ((*clunit-equality-test* #'string=))<br/>
-						&#160;&#160;&#160;(assert-equality "some string" "another string")) ; This assertion fails.
+						&#160;&#160;&#160;(assert-equality* "some string" "another string")) ; This assertion fails.
 					</code>
 				</p>
 			</description>
