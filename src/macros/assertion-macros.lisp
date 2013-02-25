@@ -78,8 +78,14 @@ Remember in Common Lisp any non-NIL value is true, if you want a strict binary a
 	(with-gensyms (result)
 		(assertion-expander :result result :test `(equalp ,value ,result) :result-expression expression  :report-expression `(equalp ,value ,expression) :expected value :forms forms)))
 
+	
+(defmacro assert-equality (test value expression &body forms)
+	"Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL TEST VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails."
+	(with-gensyms (result)
+		(assertion-expander :result result :test `(funcall ,test ,value ,result) :result-expression expression  :report-expression `(funcall ,test ,value ,expression) :expected value :forms forms)))
 
-(defmacro assert-equality (value expression &body forms)
+
+(defmacro assert-equality* (value expression &body forms)
 	"Evaluates EXPRESSION as an assertion, an assertion passes if (FUNCALL *clunit-equality-test* VALUE EXPRESSION) returns true. FORMS and their values are printed if the test fails."
 	(with-gensyms (result)
 		(assertion-expander

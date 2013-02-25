@@ -22,4 +22,4 @@
 			:assert-expands
 			:assert-condition
 			:assert-false :assert-true
-			:assert-eq :assert-eql :assert-equal :assert-equalp :assert-equality))
+			:assert-eq :assert-eql :assert-equal :assert-equalp :assert-equality :assert-equality*))
