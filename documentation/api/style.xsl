@@ -13,7 +13,7 @@
             <body>                
                 <div id="asdf-page-title">
                     <h1>API Documentation: <xsl:value-of select="@name"/></h1>
-					<img src="images/lisplogo.png" style="left:2%;top:1.5%;position:absolute" width="90" length="90"/>
+					<img src="lisplogo.png" style="left:2%;top:1.5%;position:absolute" width="90" length="90"/>
                 </div>
 				
 				<h3 style="color:green;">Author(s)</h3>
@@ -26,14 +26,10 @@
 					<xsl:value-of select="@version"/>
 				</div>
 				
-				<h3 style="color:green;">API Reference</h3>
-                <div id="asdf-toc">
-					<ol>
-						<xsl:apply-templates select="symbols/symbol" mode="toc">
-							<xsl:sort select="@name"/>
-						</xsl:apply-templates>
-					</ol>
-                </div>
+				<h3 style="color:green;">Dependencies</h3>
+				<div id="asdf-version">
+					<xsl:value-of select="@depends-on"/>
+				</div>
 				
 				<h3 style="color:green;">Description</h3>
 				<div id="asdf-description">
@@ -43,20 +39,28 @@
 				<h3 style="color:green;">ASDF Naming Convention</h3>
                 <div id="asdf-naming-convention">
 					<p>
-						Understanding the naming convention we use for ASDF systems is essential in navigating the various APIs with ease.<br/>
-						When writing your own ASDF system please use the same notation to help simplify the organization process.
+						Understanding the naming convention we use for ASDF systems is essential in navigating the various APIs with ease. When writing your own ASDF system
+						please use the same notation to help simplify the organization process.
 					</p>
 					<p>
-						An ASDF name can have one or more levels each separated by a dot i.e. '<b>.</b>' e.g. <b>xxx.yyy.zzz</b>. Each level is used to<br/> indicate
-						the logical position of the system.	For example, the ASDF systems <b>xml.dom</b> and <b>xml.xpath</b> are logically<br/>
-						considered subsystems of <b>xml</b> though they are defined separately. Breaking up one big complex system into<br/>
-						subsystems makes it easier to develop it in small modular chunks.
+						A complex application or library can be broken up into smaller modular chunks. The level of granularity is reflected in the ASDF name
+						e.g. <b>xxx.yyy.zzz</b>, were each '<b>.</b>' represents an extra level of modularity. For example, the <b>xml</b> library can be split into several modules
+						 <b>xml.dom</b>, <b>xml.parser</b> and <b>xml.xpath</b>.
 					</p>
 					<p>
-						The first part of an ASDF name, i.e. the part before the first '<b>.</b>' is the package name of all the logical subsystems.<br/>
-						For example the	ASDF systems <b>xml.dom</b> and <b>xml.xpath</b> are defined in the package <b>xml</b> and any exported symbol<br/>
-						defined in the logical subsytems is accessed as <b>xml:symbol-name</b>.
+						Each module is defined in its own package which has the same name as the ASDF system. A higher layer module can import symbols defined in its sub-modules
+						and re-export them as part of its own package to create a unified API. For example the <b>xml</b> system imports the <b>xml.parser:parse-xml-file</b> symbol from the
+						<b>xml.parser</b> sub-module and exports it from its own package as <b>xml:parse-xml-file</b>.
 					</p>
+                </div>
+				
+				<h3 style="color:green;">API Reference</h3>
+                <div id="asdf-toc">
+					<ol>
+						<xsl:apply-templates select="symbols/symbol" mode="toc">
+							<xsl:sort select="@name"/>
+						</xsl:apply-templates>
+					</ol>
                 </div>
 				
 				<h3 style="color:green;">Package API</h3>
