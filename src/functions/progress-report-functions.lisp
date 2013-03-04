@@ -2,11 +2,11 @@
 
 (defun report-suite-progress (suite suite-list)
 	(if *report-progress*
-		(format *standard-output* "~%~%~VT~S: (Test Suite)" (* *tab-width* (1+ (length suite-list))) suite)))
+		(format *standard-output* "~%~%~VT~A: (Test Suite)" (* *tab-width* (1+ (length suite-list))) suite)))
 
 (defun report-test-progress (test-name suite-list)
 	(if *report-progress*
-		(format *standard-output* "~%~VT~S: " (* *tab-width* (1+ (length suite-list))) test-name)))
+		(format *standard-output* "~%~VT~A: " (* *tab-width* (1+ (length suite-list))) test-name)))
 
 (defun report-assertion-progress (type)
 	(if *report-progress*

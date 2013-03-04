@@ -12,8 +12,8 @@
 					(dolist (report (remove-if #'clunit-test-report-passed-p test-reports))
 						(unless (equal suite (slot-value report 'suite-list))
 							(setf suite (slot-value report 'suite-list))
-							#-clisp (format stream "~4I~:@_~:@_~8I~S~{~^ -> ~S~}: (Test Suite)" (first suite) (rest suite))
-							#+clisp (format stream "~-4I~:@_~:@_~S~{~^ -> ~S~}: (Test Suite)~4I" (first suite) (rest suite)))
+							#-clisp (format stream "~4I~:@_~:@_~8I~A~{~^ -> ~A~}: (Test Suite)" (first suite) (rest suite))
+							#+clisp (format stream "~-4I~:@_~:@_~A~{~^ -> ~A~}: (Test Suite)~4I" (first suite) (rest suite)))
 							(format stream "~:W" report))))
 		
 			#-clisp (format stream	"~:@_~I~:@_SUMMARY:~:@_========")
@@ -22,16 +22,19 @@
 				#-clisp (format stream	"~4I~:@_Test functions:~8I~:@_Executed: ~D~:@_Skipped:  ~D~4I~:@_~:@_Tested ~D assertion~:P.~8I"		(- (length test-reports) skipped) skipped total)
 				#+clisp (format stream	"~4I~:@_Test functions:~8I~:@_Executed: ~D~:@_Skipped:  ~D~-8I~:@_~:@_Tested ~D assertion~:P.~8I"	(- (length test-reports) skipped) skipped total)
 				(unless (zerop total)
-					(format stream	"~:@_Passed: ~D/~D (~5,1F%)" passed total (* 100 (/ passed total)))
-					(format stream	"~:@_Failed: ~D/~D (~5,1F%)" failed total (* 100 (/ failed total)))
-					(format stream	"~:@_Errors: ~D/~D (~5,1F%)" errors total (* 100 (/ errors total))))))))
+					(if (plusp passed)
+						(format stream	"~:@_Passed: ~D/~D (~5,1F%)" passed total (* 100 (/ passed total))))
+					(if (plusp failed)
+						(format stream	"~:@_Failed: ~D/~D (~5,1F%)" failed total (* 100 (/ failed total))))
+					(if (plusp errors)
+						(format stream	"~:@_Errors: ~D/~D (~5,1F%)" errors total (* 100 (/ errors total)))))))))
 
 
 (defmethod print-format ((report clunit-test-report) (format (eql :default)) stream)
 	(with-slots (test-name assertion-conditions) report
 		(dolist (condition assertion-conditions)
 			(unless (typep condition 'assertion-passed)
-				(format stream "~:@_~S: ~<~:W~:>~:@_" test-name condition)))))
+				(format stream "~:@_~A: ~<~:W~:>~:@_" test-name condition)))))
 
 
 (defmethod print-format ((condition assertion-error) (format (eql :default)) stream)
