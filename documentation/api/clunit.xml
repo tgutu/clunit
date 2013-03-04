@@ -162,11 +162,15 @@
 		</symbol>
 		
 		<symbol name="assert-condition" type="Macro">
+			<argument  value-type="CONDITION" arg-type="required" name="condition"/>
 			<argument  value-type="t" arg-type="required" name="expression"/>
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
 			<description>
 				<p>
 					Evaluates EXPRESSION as an assertion, an assertion passes if EXPRESSION signals CONDITION. FORMS and their values are printed if the test fails.
+					<code>
+						(assert-condition arithmetic-error (/ 1 0)) ; This assertion passes.
+					</code>
 				</p>
 			</description>
 		</symbol>

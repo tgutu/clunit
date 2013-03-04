@@ -116,13 +116,10 @@ Remember in Common Lisp any non-NIL value is true, if you want a strict binary a
 			(progn
 				;; We pass the expression to EVAL because constant folding in the SBCL compiler removes intentional errors like (/ 1 0).
 				;; I don't completely understand the reason for removing a constant that signals an error from the compiled code.
-				(eval ',expression)
+				,expression
 				(signal-assertion :fail :expression ',expression :expected ',condition :forms (list ,@(form-expander forms))))
-			
 			(,condition ()
-					(signal-assertion :pass))
-			(condition (c)
-					(signal-assertion :fail :expression ',expression :returned (type-of c) :expected ',condition :forms (list ,@(form-expander forms)))))))
+					(signal-assertion :pass)))))
 
 ;; Force assertion failure.
 (defun assert-fail (format-string &rest args)
