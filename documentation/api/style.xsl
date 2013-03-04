@@ -39,17 +39,17 @@
 				<h3 style="color:green;">ASDF Naming Convention</h3>
                 <div id="asdf-naming-convention">
 					<p>
-						Understanding the naming convention we use for ASDF systems is essential in navigating the various APIs with ease. When writing your own ASDF system
+						Understanding the naming convention we use for ASDF systems is essential in navigating the various APIs with ease. When writing your own ASDF system<br/>
 						please use the same notation to help simplify the organization process.
 					</p>
 					<p>
-						A complex application or library can be broken up into smaller modular chunks. The level of granularity is reflected in the ASDF name
-						e.g. <b>xxx.yyy.zzz</b>, were each '<b>.</b>' represents an extra level of modularity. For example, the <b>xml</b> library can be split into several modules
+						A complex application or library can be broken up into smaller modular chunks. The level of granularity is reflected in the ASDF name e.g. <b>xxx.yyy.zzz</b>,<br/>
+						were each '<b>.</b>' represents an extra level of modularity. For example, the <b>xml</b> library can be split into several modules
 						 <b>xml.dom</b>, <b>xml.parser</b> and <b>xml.xpath</b>.
 					</p>
 					<p>
-						Each module is defined in its own package which has the same name as the ASDF system. A higher layer module can import symbols defined in its sub-modules
-						and re-export them as part of its own package to create a unified API. For example the <b>xml</b> system imports the <b>xml.parser:parse-xml-file</b> symbol from the
+						Each module is defined in its own package which has the same name as the ASDF system. A higher layer module can import symbols defined in its sub-modules<br/>
+						and re-export them as part of its own package to create a unified API. For example the <b>xml</b> system imports the <b>xml.parser:parse-xml-file</b> symbol from the<br/>
 						<b>xml.parser</b> sub-module and exports it from its own package as <b>xml:parse-xml-file</b>.
 					</p>
                 </div>
