@@ -36,13 +36,8 @@
 				</p>
 			</description>
 		</symbol>
-
-		<symbol name="clunit-report" type="CLASS">
-			<description>
-				<p>CLUNIT-REPORT is the class of the report object returned by the functions <a href="#run-suite">RUN-SUITE</a> and <a href="#run-test">RUN-TEST</a>.</p>
-			</description>
-		</symbol>
-
+		
+		<!-- Assertion Macros -->
 		<symbol name="assert-true" type="Macro">
 			<argument  value-type="t" arg-type="required" name="expression"/>
 			<argument  value-type="LIST" arg-type="body" name="forms"/>
@@ -215,6 +210,44 @@
 			</description>
 		</symbol>
 		
+		<!-- CLUNIT-* Classes -->
+		<symbol name="clunit-report" type="CLASS">
+			<description>
+				<p>CLUNIT-REPORT is the class of the report object returned by the functions <a href="#run-suite">RUN-SUITE</a>, <a href="#run-test">RUN-TEST</a> and <a href="#rerun-failed-tests">RERUN-FAILED-TESTS</a>.</p>
+			</description>
+		</symbol>
+		
+		<symbol name="clunit-test-report" type="CLASS">
+			<description>
+				<p>A CLUNIT-TEST-REPORT is report is created for each executed test case function, see <a href="#clunit-test-reports">clunit-test-reports</a>.</p>
+			</description>
+		</symbol>
+
+		<symbol name="clunit-test-reports" type="Function">
+			<argument  value-type="CLUNIT-REPORT" arg-type="required" name="clunit-report"/>
+			<return-type>LIST</return-type>
+			<description>
+				<p>Returns a list of CLUNIT-TEST-REPORTS, see <a href="#clunit-test-report">clunit-test-report</a>.</p>
+			</description>
+		</symbol>
+
+		<symbol name="clunit-test-report-name" type="Function">
+			<argument  value-type="CLUNIT-TEST-REPORT" arg-type="required" name="clunit-test-report"/>
+			<return-type>SYMBOL</return-type>
+			<description>
+				<p>A returns the name of the test case function the report was generated for.</p>
+			</description>
+		</symbol>
+
+		<symbol name="clunit-test-report-passed-p" type="Function">
+			<argument  value-type="CLUNIT-TEST-REPORT" arg-type="required" name="clunit-test-report"/>
+			<return-type>(or t nil)</return-type>
+			<description>
+				<p>Returns true if all the assertions in the test case function were successful.</p>
+			</description>
+		</symbol>
+
+		<!-- DEF* macros -->
 		<symbol name="defsuite" type="Macro">
 			<argument  value-type="SYMBOL" arg-type="required" name="name"/>
 			<argument  value-type="List" arg-type="required" name="parents"/>

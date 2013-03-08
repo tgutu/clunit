@@ -1,7 +1,7 @@
 (in-package :clunit)
 
 ;; README!!!! 
-;; The pretty printing in CLISP is really broken so we just try has hard as can to compensate.
+;; The pretty printing in CLISP is really broken so we just try has hard as we can to compensate.
 (defmethod print-format ((clunit-report clunit-report) (format (eql :default)) stream)
 	(pprint-logical-block (stream nil)
 		(with-slots (passed failed errors skipped test-reports) clunit-report
