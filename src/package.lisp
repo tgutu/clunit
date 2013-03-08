@@ -25,4 +25,4 @@
 			:defined-test-p			:defined-suite-p
 			:get-child-tests 		:get-child-suites
 			:get-defined-tests 		:get-defined-suites
-			:clunit-test-reports	:clunit-test-report-name	:clunit-test-report-passed-p))
+			:test-report-passed-p	:test-report-name	:test-reports))

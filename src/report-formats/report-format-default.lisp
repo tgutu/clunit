@@ -9,7 +9,7 @@
 				#-clisp (format stream "~:@_FAILURE DETAILS:~:@_~4:I================")
 				#+clisp (format stream "~:@_FAILURE DETAILS:~:@_~8I================")
 				(let (suite)
-					(dolist (report (remove-if #'clunit-test-report-passed-p test-reports))
+					(dolist (report (remove-if #'test-report-passed-p test-reports))
 						(unless (equal suite (slot-value report 'suite-list))
 							(setf suite (slot-value report 'suite-list))
 							#-clisp (format stream "~4I~:@_~:@_~8I~A~{~^ -> ~A~}: (Test Suite)" (first suite) (rest suite))

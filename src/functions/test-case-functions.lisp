@@ -103,7 +103,7 @@ If test case depends on test cases that have not yet run or are also queued, the
 				(dolist (test dependencies)
 					(if (get-test-case test) ; Check if reference is stale.
 
-						(let ((report (find test (slot-value *clunit-report* 'test-reports) :test #'eq :key #'clunit-test-report-name)))
+						(let ((report (find test (slot-value *clunit-report* 'test-reports) :test #'eq :key #'test-report-name)))
 							(cond
 								((not report)								; If test report was not found it means test has not yet been run.
 																			(go :queue))
