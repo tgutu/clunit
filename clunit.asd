@@ -14,7 +14,7 @@ CLUnit provides a rich set of features aimed at improving your unit testing expe
 *	Allows redefinition of inline functions and macros without having to redefine your tests.
 *	Supports composable test suite fixtures.
 *	Allows for an interactive testing process which gives you access to the test environment.
-*	Provides visual feeback of the unit test progress.
+*	Provides visual feedback of the unit test progress.
 *	Extensible test reporting. Builtin support for default reporting and TAP output."
 
 	:components 
