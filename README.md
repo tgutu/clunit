@@ -2,7 +2,7 @@
 
 CLUnit is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
 
-Author: Tapiwa Gutu <tgutu@ml.sun.ac.za>
+Author: Tapiwa Gutu
 
 CLUnit provides a rich set of features aimed at improving your unit testing experience:
 + Multiple inheritance for test suites allows you to group tests into hierarchies.
@@ -93,14 +93,11 @@ Each test, like ``test-int1`` in the above example, can contain a number of asse
 | ``assert-equal VALUE EXPRESSION``          | Passes if ``(EQUAL VALUE EXPRESSION)`` returns true              |
 | ``assert-equalp VALUE EXPRESSION``         | Passes if ``(EQUALP VALUE EXPRESSION)`` returns true             |
 | ``assert-equality TEST VALUE EXPRESSION``  | Passes if ``(FUNCALL TEST VALUE EXPRESSION)`` returns true       |
-| ``assert-equality* VALUE EXPRESSION``      | Passes if  ``(FUNCALL *clunit-equality-test* VALUE EXPRESSION)`` |
-|                                            | returns true.                                                    |
-|                                            | By default *clunit-equality-test* is ``EQUALP``                  |
-| ``assert-expands EXPANSION EXPRESSION``    | Tests macro expansion, passes if                                 |
-|                                            | ``(EQUALP EXPANSION (MACROEXPAND-1 EXPRESSION))`` is true        |
+| ``assert-equality* VALUE EXPRESSION``      | Passes if  ``(FUNCALL *clunit-equality-test* VALUE EXPRESSION)`` returns true. By default *clunit-equality-test* is ``EQUALP`` |
+| ``assert-expands EXPANSION EXPRESSION``    | Tests macro expansion, passes if ``(EQUALP EXPANSION (MACROEXPAND-1 EXPRESSION))`` is true        |
 | ``assert-condition CONDITION EXPRESSION``  | Passes if EXPR signals                                           |
 | ``assert-fails FORMAT-STRING``             | Force test to fail, giving a format string for the message       |
-| ------------------------------------------ | ---------------------------------------------------------------- |
+
 
 All of these tests take optional forms, which are evaluated and printed if the test fails.
 These can be used to provide test diagnostics or documentation. For example
