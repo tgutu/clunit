@@ -1,4 +1,4 @@
-##CLUnit
+## CLUnit
 
 CLUnit is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
 
@@ -16,7 +16,7 @@ CLUnit provides a rich set of features aimed at improving your unit testing expe
 
 Check out the comprehensive [CLUnit Tutorial][1].
 
-#Example
+# Example
 
 ```cl
 (ql:quickload "clunit")
@@ -78,11 +78,11 @@ SUMMARY:
         Failed: 1/4 ( 25.0%) 
 ```
 
-(if you are entering forms in the REPL, the "print" is not usually needed).
+(if you are entering forms in the REPL, the ``print`` form is not usually needed).
 
-# Tests
+# Tests and assertions
 
-Each test, like ``test-int1`` in the above example, can contain a number of assertions. CLUnit provides the following assertions:
+Each test, like ``test-int1`` in the above example, can contain a number of assertions, given in the table below:
 
 | Assertion                                  | Description                                                      |
 | ------------------------------------------ | ---------------------------------------------------------------- |
@@ -93,9 +93,9 @@ Each test, like ``test-int1`` in the above example, can contain a number of asse
 | ``assert-equal VALUE EXPRESSION``          | Passes if ``(EQUAL VALUE EXPRESSION)`` returns true              |
 | ``assert-equalp VALUE EXPRESSION``         | Passes if ``(EQUALP VALUE EXPRESSION)`` returns true             |
 | ``assert-equality TEST VALUE EXPRESSION``  | Passes if ``(FUNCALL TEST VALUE EXPRESSION)`` returns true       |
-| ``assert-equality* VALUE EXPRESSION``      | Passes if  ``(FUNCALL *clunit-equality-test* VALUE EXPRESSION)`` returns true. By default *clunit-equality-test* is ``EQUALP`` |
+| ``assert-equality* VALUE EXPRESSION``      | Passes if  ``(FUNCALL \*clunit-equality-test\* VALUE EXPRESSION)`` returns true. By default *clunit-equality-test* is ``EQUALP`` |
 | ``assert-expands EXPANSION EXPRESSION``    | Tests macro expansion, passes if ``(EQUALP EXPANSION (MACROEXPAND-1 EXPRESSION))`` is true        |
-| ``assert-condition CONDITION EXPRESSION``  | Passes if EXPR signals                                           |
+| ``assert-condition CONDITION EXPRESSION``  | Passes if ``EXPRESSION`` signals ``CONDITION``                   |
 | ``assert-fails FORMAT-STRING``             | Force test to fail, giving a format string for the message       |
 
 
