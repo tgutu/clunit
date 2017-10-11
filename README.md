@@ -1,3 +1,6 @@
+# New Project Steward Required!
+### This project needs a new maintainer or someone to continue taking it forward. I put a lot of effort and passion to deliver not just a functional but also a beautifully designed and written piece of code. Unfortunately other commitments have crept up over the years, thus I hope someone just as passionate can take over.
+
 ## CLUnit
 
 CLUnit is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
